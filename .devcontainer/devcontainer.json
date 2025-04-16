@@ -1,12 +1,6 @@
-// For format details, see https://aka.ms/devcontainer.json.
 {
   "name": "Dreamcast Dev",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "VER": "gcc-9"
-    }
-  },
+  "image": "sbstnc/openmenu-dev:0.1.0",
   "runArgs": [
     "--userns=keep-id"
   ],
@@ -20,6 +14,5 @@
         "ms-vscode.cpptools"
       ]
     }
-  },
-  "remoteUser": "dev"
+  }
 }
