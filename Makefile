@@ -37,12 +37,23 @@ $(BIN): $(TARGET)
 	@echo $(notdir $(OBJCOPY)) -R .stack -O binary $< $@
 	@$(OBJCOPY) -R .stack -O binary $< $@
 
-.PHONY: clean
-.PHONY: clean-elf
+# Run clang-format on source code
+.PHONY: format
+format:
+	@echo "Running clang-format"
+	@clang-format -i $(SRCS)
 
+# Dry-run clang-format on source code to check for formatting errors
+.PHONY: format-check
+format-check:
+	@echo "Checking clang-format"
+	@clang-format --dry-run --Werror $(SRCS)
+
+.PHONY: clean
 clean:
 	-@$(RM) -f $(TARGET) $(OBJS) $(BIN)
 
+.PHONY: clean-elf
 clean-elf:
 	-@$(RM) -f $(TARGET)
 
