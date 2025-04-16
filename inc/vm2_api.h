@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <dc/maple.h>
 
 typedef struct maple_alldevinfo {
     uint32  functions;              /**< \brief Function codes supported */
