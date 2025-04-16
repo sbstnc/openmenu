@@ -1,4 +1,3 @@
-
 /*
  * File: main.c
  * Project: kos_pvr_texture_load
@@ -7,6 +6,9 @@
  * -----
  * Copyright (c) 2019 Hayden Kowalchuk
  */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include <arch/exec.h>
 #include <dc/cdrom.h>
@@ -15,9 +17,6 @@
 #include <dc/maple/controller.h>
 #include <dc/pvr.h>
 #include <dc/video.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "backend/db_list.h"
 #include "backend/gd_list.h"
