@@ -1,4 +1,5 @@
 TARGET := themeMenu.elf
+BIN := 1ST_READ.BIN
 
 EXT_SRCS := external/easing.c
 TXR_SRCS := texture/block_pool.c texture/lru.c texture/txr_manager.c texture/dat_reader.c texture/serial_sanitize.c texture/simple_texture_allocator.c
@@ -14,11 +15,11 @@ AS := kos-as
 OBJCOPY := $(KOS_OBJCOPY)
 RM := rm
 
-CFLAGS := -I. -ffunction-sections -fdata-sections -std=c11 -O2 -g -Wno-unknown-pragmas -Wall -Wextra $(OPTIONS) 
-LDFLAGS := -Wl,--gc-sections -Xlinker -Map=output.map 
+CFLAGS := -I. -ffunction-sections -fdata-sections -std=c11 -O2 -g -Wno-unknown-pragmas -Wall -Wextra $(OPTIONS)
+LDFLAGS := -Wl,--gc-sections -Xlinker -Map=output.map
 LIBS := -lm ./lib/libcrayon_vmu.a
 
-all: clean-elf $(TARGET)
+all: clean-elf $(BIN)
 
 %.o: %.s
 	@echo $(AS) $<
@@ -31,17 +32,19 @@ all: clean-elf $(TARGET)
 $(TARGET): $(OBJS)
 	@echo \> $(CC) -o $(TARGET)
 	@$(CC) -o $(TARGET) $(LDFLAGS) $(CFLAGS) $(OBJS) $(LIBS) $(MAP)
-	@echo $(notdir $(OBJCOPY)) -R .stack -O binary $@ $(basename $@).bin
-	@$(OBJCOPY) -R .stack -O binary  $@ 1ST_READ.BIN
+
+$(BIN): $(TARGET)
+	@echo $(notdir $(OBJCOPY)) -R .stack -O binary $< $@
+	@$(OBJCOPY) -R .stack -O binary $< $@
 
 .PHONY: clean
 .PHONY: clean-elf
 
 clean:
-	-@$(RM) -f $(TARGET) $(OBJS) *.bin *.BIN
+	-@$(RM) -f $(TARGET) $(OBJS) $(BIN)
 
 clean-elf:
 	-@$(RM) -f $(TARGET)
-	
+
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
