@@ -5,7 +5,8 @@
  * Author: Hayden Kowalchuk
  * -----
  * Copyright (c) 2021 Hayden Kowalchuk, Hayden Kowalchuk
- * License: BSD 3-clause "New" or "Revised" License, http://www.opensource.org/licenses/BSD-3-Clause
+ * License: BSD 3-clause "New" or "Revised" License,
+ * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
 #include <external/uthash.h>
@@ -15,32 +16,26 @@
 // F355 Challenge: Passione Rossa, MK-0100, T-8119N
 
 enum REMAP_TYPE {
-  REMAP_NONE = (0 << 0),  // 0
-  REMAP_ART = (1 << 0),   // 1
-  REMAP_META = (1 << 1),  // 2
+    REMAP_NONE = (0 << 0), // 0
+    REMAP_ART = (1 << 0),  // 1
+    REMAP_META = (1 << 1), // 2
 };
 
-#define REMAP_ADD_ART(ip, disc)                                    \
-  (serial_remap) {                                                 \
-    .ip_serial = ip, .art_serial = disc, .remap_choice = REMAP_ART \
-  }
+#define REMAP_ADD_ART(ip, disc)                                                                                        \
+    (serial_remap) { .ip_serial = ip, .art_serial = disc, .remap_choice = REMAP_ART }
 
-#define REMAP_ADD_META(ip, disc)                                     \
-  (serial_remap) {                                                   \
-    .ip_serial = ip, .meta_serial = disc, .remap_choice = REMAP_META \
-  }
+#define REMAP_ADD_META(ip, disc)                                                                                       \
+    (serial_remap) { .ip_serial = ip, .meta_serial = disc, .remap_choice = REMAP_META }
 
-#define REMAP_ADD_BOTH(ip, disc)                                                                     \
-  (serial_remap) {                                                                                   \
-    .ip_serial = ip, .meta_serial = disc, .art_serial = disc, .remap_choice = REMAP_META | REMAP_ART \
-  }
+#define REMAP_ADD_BOTH(ip, disc)                                                                                       \
+    (serial_remap) { .ip_serial = ip, .meta_serial = disc, .art_serial = disc, .remap_choice = REMAP_META | REMAP_ART }
 
 typedef struct serial_remap {
-  const char* ip_serial;
-  const char* art_serial;
-  const char* meta_serial;
-  UT_hash_handle hh; /* makes this structure hashable */
-  const enum REMAP_TYPE remap_choice;
+    const char* ip_serial;
+    const char* art_serial;
+    const char* meta_serial;
+    UT_hash_handle hh; /* makes this structure hashable */
+    const enum REMAP_TYPE remap_choice;
 } serial_remap;
 
 /* Generate from excel with:
@@ -52,8 +47,9 @@ static serial_remap serial_remap_members[] = {
     /* PAL Regional Duplicates */
     REMAP_ADD_BOTH("T13001D05", "T13001D"), /* Blue Stinger */
     REMAP_ADD_BOTH("T8111D58", "T8111D50"), /* ECW Hardcore Revolution */
-    //T9705D50	T9706D50	NBA Showtime: NBA on NBC, Incorrect IP.BIN
-    //T7003D	  T7005D	  Plasma Sword: Nightmare of Bilstein, Incorrect IP.BIN
+    // T9705D50	T9706D50	NBA Showtime: NBA on NBC, Incorrect IP.BIN
+    // T7003D	  T7005D	  Plasma Sword: Nightmare of Bilstein, Incorrect
+    // IP.BIN
     REMAP_ADD_BOTH("T45001D09", "T45001D05"), /* Tom Clancy's Rainbow Six */
     REMAP_ADD_BOTH("T45001D18", "T45001D05"), /* Tom Clancy's Rainbow Six */
     REMAP_ADD_BOTH("T45002D09", "T45002D05"), /* Tom Clancy's Rainbow Six: Rogue Spear */
@@ -178,34 +174,37 @@ static serial_remap serial_remap_members[] = {
 static const int serials_added = sizeof(serial_remap_members) / sizeof(serial_remap);
 static serial_remap* serial_remap_list = NULL;
 
-const char* serial_santize_art(const char* id) {
-  const serial_remap* item;
-  const char* ret = id;
+const char*
+serial_santize_art(const char* id) {
+    const serial_remap* item;
+    const char* ret = id;
 
-  HASH_FIND_STR(serial_remap_list, id, item);
+    HASH_FIND_STR(serial_remap_list, id, item);
 
-  if (item && (item->remap_choice & REMAP_ART)) {
-    ret = item->art_serial;
-  }
-  return ret;
+    if (item && (item->remap_choice & REMAP_ART)) {
+        ret = item->art_serial;
+    }
+    return ret;
 }
 
-const char* serial_santize_meta(const char* id) {
-  const serial_remap* item;
-  const char* ret = id;
+const char*
+serial_santize_meta(const char* id) {
+    const serial_remap* item;
+    const char* ret = id;
 
-  HASH_FIND_STR(serial_remap_list, id, item);
+    HASH_FIND_STR(serial_remap_list, id, item);
 
-  if (item && (item->remap_choice & REMAP_META)) {
-    ret = item->meta_serial;
-  }
-  return ret;
+    if (item && (item->remap_choice & REMAP_META)) {
+        ret = item->meta_serial;
+    }
+    return ret;
 }
 
-int serial_sanitizer_init(void) {
-  for (int i = 0; i < serials_added; i++) {
-    HASH_ADD_STR(serial_remap_list, ip_serial, &serial_remap_members[i]);
-  }
+int
+serial_sanitizer_init(void) {
+    for (int i = 0; i < serials_added; i++) {
+        HASH_ADD_STR(serial_remap_list, ip_serial, &serial_remap_members[i]);
+    }
 
-  return 0;
+    return 0;
 }
