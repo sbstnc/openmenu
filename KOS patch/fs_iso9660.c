@@ -28,6 +28,10 @@ ISO9660 systems, as these were used as references as well.
 
 */
 
+#ifndef NAME_MAX
+#define NAME_MAX 256
+#endif
+
 #include <dc/fs_iso9660.h>
 #include <dc/cdrom.h>
 #include <dc/vblank.h>
@@ -344,7 +348,7 @@ static int init_percd() {
     {
         return i;
        }
-	
+
 	if(disc_type == CD_GDROM)
 	{
 		session_base = 45150;
@@ -353,7 +357,7 @@ static int init_percd() {
     {
         return -1;
 	}
-	
+
     /* Check for joliet extensions */
     joliet = 0;
 
