@@ -19,6 +19,13 @@ CFLAGS := -I. -ffunction-sections -fdata-sections -std=c11 -O2 -g -Wno-unknown-p
 LDFLAGS := -Wl,--gc-sections -Xlinker -Map=output.map
 LIBS := -lm ./lib/libcrayon_vmu.a
 
+# devcontainer image vars
+DEVCONTAINER_BUILD_DATE := $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
+DEVCONTAINER_IMAGE_URL ?= https://hub.docker.com/r/sbstnc/openmenu-dev
+DEVCONTAINER_IMAGE_VERSION ?= 0.1.0
+DEVCONTAINER_VCS_REF := $(shell git rev-parse --short HEAD)
+DEVCONTAINER_VCS_URL := $(shell git config --get remote.origin.url)
+
 all: clean-elf $(BIN)
 
 %.o: %.s
@@ -57,5 +64,20 @@ clean:
 clean-elf:
 	-@$(RM) -f $(TARGET)
 
+.PHONY: run
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
+
+.PHONY: devcontainer
+devcontainer:
+	cd docker && \
+	docker build \
+	  --platform linux/amd64 \
+	  --build-arg BUILD_DATE="$(DEVCONTAINER_BUILD_DATE)" \
+	  --build-arg IMAGE_URL="$(DEVCONTAINER_IMAGE_URL)" \
+	  --build-arg IMAGE_VERSION="$(DEVCONTAINER_IMAGE_VERSION)" \
+	  --build-arg VCS_REF="$(DEVCONTAINER_VCS_REF)" \
+	  --build-arg VCS_URL="$(DEVCONTAINER_VCS_URL)" \
+	  -t openmenu-dev:"$(DEVCONTAINER_IMAGE_VERSION)" \
+	  -t openmenu-dev:latest \
+	  . --load
