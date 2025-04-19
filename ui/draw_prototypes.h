@@ -8,6 +8,8 @@
  * License: BSD 3-clause "New" or "Revised" License, http://www.opensource.org/licenses/BSD-3-Clause
  */
 
+#pragma once
+
 #include "common.h"
 
 #ifdef _arch_dreamcast

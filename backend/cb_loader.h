@@ -1,3 +1,5 @@
+#pragma once
+
 const int cb_loader_size = 43516;
 const unsigned char cb_loader_data[43516] = {
 	0x0c, 0xd0, 0x0b, 0xd1, 0x1b, 0x20, 0x2b, 0x40, 

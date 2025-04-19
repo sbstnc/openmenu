@@ -1,3 +1,5 @@
+#pragma once
+
 const int bloader_size = 696;
 uint8_t bloader_data[696] =
 {

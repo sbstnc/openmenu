@@ -1,3 +1,5 @@
+#pragma once
+
 const int altctrl_size = 220;
 const unsigned char altctrl_data[220] =
 {
