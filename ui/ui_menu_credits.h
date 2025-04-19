@@ -40,5 +40,5 @@ void draw_exit_tr(void);
 void draw_codebreaker_op(void);
 void draw_codebreaker_tr(void);
 
-void set_cur_game_item(const gd_item *id);
-const gd_item *get_cur_game_item();
+void set_cur_game_item(const gd_item* id);
+const gd_item* get_cur_game_item();

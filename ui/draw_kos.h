@@ -20,11 +20,8 @@
 #include "theme_manager.h"
 
 #ifndef PVR_PACK_ARGB
-#define PVR_PACK_ARGB(a, r, g, b) ( \
-    (((uint8_t)((a))) << 24) |      \
-    (((uint8_t)((r))) << 16) |      \
-    (((uint8_t)((g))) << 8) |       \
-    (((uint8_t)((b))) << 0))
+#define PVR_PACK_ARGB(a, r, g, b)                                                                                      \
+    ((((uint8_t)((a))) << 24) | (((uint8_t)((r))) << 16) | (((uint8_t)((g))) << 8) | (((uint8_t)((b))) << 0))
 #endif
 
 #define COLOR_WHITE    (0xFFFFFFFF) /*(PVR_PACK_ARGB(0xFF,0xFF,0xFF,0xFF))*/

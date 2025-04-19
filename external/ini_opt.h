@@ -10,10 +10,10 @@
 
 #pragma once
 
-#define INI_ALLOW_MULTILINE (0)
-#define INI_ALLOW_BOM (0)
+#define INI_ALLOW_MULTILINE       (0)
+#define INI_ALLOW_BOM             (0)
 #define INI_ALLOW_INLINE_COMMENTS (0)
-#define INI_STOP_ON_FIRST_ERROR (1)
-#define INI_HANDLER_LINENO (0)
-#define INI_USE_STACK (1)
-#define INI_MAX_LINE (400)
+#define INI_STOP_ON_FIRST_ERROR   (1)
+#define INI_HANDLER_LINENO        (0)
+#define INI_USE_STACK             (1)
+#define INI_MAX_LINE              (400)

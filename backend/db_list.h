@@ -13,7 +13,7 @@
 #include "db_item.h"
 
 int db_load_DAT(void);
-int db_get_meta(const char *id, struct db_item **item);
+int db_get_meta(const char* id, struct db_item** item);
 
-const char *db_format_nplayers_str(int nplayers);
-const char *db_format_vmu_blocks_str(int num_blocks);
+const char* db_format_nplayers_str(int nplayers);
+const char* db_format_vmu_blocks_str(int num_blocks);

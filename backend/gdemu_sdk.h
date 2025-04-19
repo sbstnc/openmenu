@@ -15,7 +15,7 @@
  * 01 09 00 00 - internal bootloader version. don't used in early models
  * 05 14 00 00 - FW version (5.14.0)
  */
-int gdemu_get_version(void *buffer, uint32_t *size);
+int gdemu_get_version(void* buffer, uint32_t* size);
 
 /* param = 0x55 next img */
 /* param = 0x44 prev img */

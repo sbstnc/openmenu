@@ -22,10 +22,10 @@
 struct dat_file;
 
 typedef struct dimen_RECT {
-  int16_t x;
-  int16_t y;
-  int16_t w;
-  int16_t h;
+    int16_t x;
+    int16_t y;
+    int16_t w;
+    int16_t h;
 } dimen_RECT;
 
 /* Called only once at start */
@@ -39,30 +39,30 @@ void draw_set_list(int list);
 int draw_get_list(void);
 
 /* returns default missing texture */
-void *draw_load_missing_icon(void *user);
+void* draw_load_missing_icon(void* user);
 /* Throws pass whatever is relevant to your platform as a pointer and it will filled + returned if successfull, otherwise NULL */
-void *draw_load_texture(const char *filename, void *user);
-void *draw_load_texture_buffer(const char *filename, void *user, void *buffer);
+void* draw_load_texture(const char* filename, void* user);
+void* draw_load_texture_buffer(const char* filename, void* user, void* buffer);
 /* Loads from new DAT file using struct + ID of file requested */
-void *draw_load_texture_from_DAT_to_buffer(const struct dat_file *bin, const char *ID, void *user, void *buffer);
+void* draw_load_texture_from_DAT_to_buffer(const struct dat_file* bin, const char* ID, void* user, void* buffer);
 
 /* draws an image at coords of a given size */
-void draw_draw_image(int x, int y, float width, float height, uint32_t color, void *user);
+void draw_draw_image(int x, int y, float width, float height, uint32_t color, void* user);
 /* draws an image centered at coords of a given size */
-void draw_draw_image_centered(int x, int y, float width, float height, uint32_t color, void *user);
+void draw_draw_image_centered(int x, int y, float width, float height, uint32_t color, void* user);
 /* draws an image at coords as a square */
-void draw_draw_square(int x, int y, float size, uint32_t color, void *user);
+void draw_draw_square(int x, int y, float size, uint32_t color, void* user);
 /* Draws part of an image specified in rect at the given coords of size */
-void draw_draw_sub_image(int x, int y, float width, float height, uint32_t color, void *user, const dimen_RECT *rect);
+void draw_draw_sub_image(int x, int y, float width, float height, uint32_t color, void* user, const dimen_RECT* rect);
 
 /* Draws untextured quad at coords with size and color(rgba) */
 void draw_draw_quad(int x, int y, float width, float height, uint32_t color);
 
 /* exec proto */
 struct gd_item;
-void bleem_launch(const struct gd_item *disc);
-void dreamcast_launch_disc(const struct gd_item *disc);
-void dreamcast_launch_cb(const struct gd_item *disc);
+void bleem_launch(const struct gd_item* disc);
+void dreamcast_launch_disc(const struct gd_item* disc);
+void dreamcast_launch_cb(const struct gd_item* disc);
 
 /* z depth */
 float z_get(void);

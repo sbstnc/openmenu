@@ -10,12 +10,12 @@
 
 #pragma once
 
-#define UI_NAME SCROLL
+#define UI_NAME                      SCROLL
 
-#define MAKE_FN(name, func) void name##_##func(void)
-#define FUNCTION(signal, func) MAKE_FN(signal, func)
+#define MAKE_FN(name, func)          void name##_##func(void)
+#define FUNCTION(signal, func)       MAKE_FN(signal, func)
 
-#define MAKE_FN_INPUT(name, func) void name##_##func(unsigned int button)
+#define MAKE_FN_INPUT(name, func)    void name##_##func(unsigned int button)
 #define FUNCTION_INPUT(signal, func) MAKE_FN_INPUT(signal, func)
 
 /* Called once on boot */

@@ -14,20 +14,10 @@
 
 #include "../external/easing.h"
 
-enum control { NONE = 0,
-               LEFT,
-               RIGHT,
-               UP,
-               DOWN,
-               A,
-               B,
-               X,
-               Y,
-               START,
-               TRIG_L,
-               TRIG_R };
+enum control { NONE = 0, LEFT, RIGHT, UP, DOWN, A, B, X, Y, START, TRIG_L, TRIG_R };
 
-static inline int file_exists(const char *path) {
-  struct stat buffer;
-  return (stat(path, &buffer) == 0);
+static inline int
+file_exists(const char* path) {
+    struct stat buffer;
+    return (stat(path, &buffer) == 0);
 }

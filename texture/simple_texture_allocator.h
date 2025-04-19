@@ -9,6 +9,7 @@
  */
 
 #pragma once
+
 #define TEX_ALIGNMENT (32)
 
 #include <stdint.h>
@@ -17,14 +18,14 @@
 #define TEXMAN_BUFFER_SIZE (2 * 1024 * 1024)
 
 struct Simple_Texture {
-  unsigned char *location;
-  int width, height;
+    unsigned char* location;
+    int width, height;
 };
 
 /* used for initialization */
 int texman_inited(void);
-void texman_reset(void *buf, uint32_t size);
-void texman_set_buffer(void *buf, uint32_t size);
+void texman_reset(void* buf, uint32_t size);
+void texman_set_buffer(void* buf, uint32_t size);
 
 /* management funcs for clients
 Steps:
@@ -37,7 +38,7 @@ uint32_t texman_create(void);
 void texman_clear(void);
 int texman_get_space_available(void);
 int texman_is_space_available(void);
-unsigned char *texman_get_tex_data(uint32_t num);
-struct Simple_Texture *texman_reserve_memory(uint32_t width, uint32_t height, int bpp);
-void texman_upload(uint32_t width, uint32_t height, int bpp, const void *buffer);
+unsigned char* texman_get_tex_data(uint32_t num);
+struct Simple_Texture* texman_reserve_memory(uint32_t width, uint32_t height, int bpp);
+void texman_upload(uint32_t width, uint32_t height, int bpp, const void* buffer);
 void texman_bind_tex(uint32_t num);
