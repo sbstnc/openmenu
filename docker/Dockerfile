@@ -58,7 +58,7 @@ RUN cd /opt/toolchains/dc/kos && \
   make
 
 WORKDIR /home/${USER_NAME}
-COPY entrypoint.sh /home/${USER_NAME}/entrypoint.sh
+RUN touch .bashrc && echo "source /opt/toolchains/dc/kos/environ.sh" >> .bashrc
 
 ARG BUILD_DATE
 ARG IMAGE_URL
@@ -75,5 +75,4 @@ LABEL org.opencontainers.image.title="openMenu DevContainer" \
   org.opencontainers.image.revision=$VCS_REF \
   org.opencontainers.image.source=$VCS_URL
 
-ENTRYPOINT [ "/home/dev/entrypoint.sh" ]
 CMD ["/bin/bash"]
