@@ -9,8 +9,6 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "ui_scroll.h"
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,6 +21,8 @@
 #include "font_prototypes.h"
 #include "global_settings.h"
 #include "ui_menu_credits.h"
+
+#include "ui_scroll.h"
 
 #define UNUSED __attribute__((unused))
 

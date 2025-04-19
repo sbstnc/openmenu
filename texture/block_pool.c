@@ -9,11 +9,11 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "block_pool.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "block_pool.h"
 
 static inline void
 _pool_mark_used(block_pool* pool, unsigned int slot_num) {

@@ -10,9 +10,10 @@
 
 #pragma once
 
+#include <stdint.h>
+
 #include <dc/fmath.h>
 #include <dc/pvr.h>
-#include <stdint.h>
 
 #include "../texture/simple_texture_allocator.h"
 #include "dc/pvr_texture.h"

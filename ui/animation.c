@@ -9,9 +9,9 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "animation.h"
-
 #include <stdio.h>
+
+#include "animation.h"
 
 void
 anim_update_2d(anim2d* anim) {

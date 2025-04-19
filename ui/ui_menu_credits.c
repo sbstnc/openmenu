@@ -9,8 +9,6 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "ui_menu_credits.h"
-
 #include <string.h>
 
 #include "../backend/db_item.h"
@@ -19,6 +17,8 @@
 #include "draw_kos.h"
 #include "draw_prototypes.h"
 #include "font_prototypes.h"
+
+#include "ui_menu_credits.h"
 
 #pragma region Settings_Menu
 

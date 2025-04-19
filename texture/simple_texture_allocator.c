@@ -9,13 +9,13 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "simple_texture_allocator.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "../texture/txr_manager.h"
+
+#include "simple_texture_allocator.h"
 
 static struct Simple_Texture textures[32];
 static void* tex_buffer = NULL;

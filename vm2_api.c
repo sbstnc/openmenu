@@ -1,10 +1,11 @@
-#include "inc/vm2_api.h"
-
-#include <dc/maple.h>
-#include <kos/genwait.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+
+#include <dc/maple.h>
+#include <kos/genwait.h>
+
+#include "inc/vm2_api.h"
 
 static uint8_t recv_buff[196];
 

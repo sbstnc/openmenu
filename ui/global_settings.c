@@ -9,10 +9,10 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "global_settings.h"
-
 #include <external/libcrayonvmu/savefile.h>
 #include <external/libcrayonvmu/setup.h>
+
+#include "global_settings.h"
 
 /* Images and such */
 #if __has_include("openmenu_lcd.h") && __has_include("openmenu_pal.h") && __has_include("openmenu_vmu.h")

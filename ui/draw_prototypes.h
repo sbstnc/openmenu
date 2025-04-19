@@ -11,7 +11,6 @@
 #pragma once
 
 #include "common.h"
-
 #ifdef _arch_dreamcast
 #include "draw_kos.h"
 #else

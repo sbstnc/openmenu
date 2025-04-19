@@ -9,8 +9,6 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "theme_manager.h"
-
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
@@ -18,6 +16,8 @@
 #include "../external/ini.h"
 #include "../gdrom/gdrom_fs.h"
 #include "draw_prototypes.h"
+
+#include "theme_manager.h"
 
 /* Missing on sh-elf-gcc 9.1 ? */
 char* strdup(const char* s);

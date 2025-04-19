@@ -9,13 +9,13 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "draw_kos.h"
-
 #include <stdio.h>
 
 #include "../inc/dat_format.h"
 #include "draw_prototypes.h"
 #include "font_prototypes.h"
+
+#include "draw_kos.h"
 
 extern int round(float x);
 

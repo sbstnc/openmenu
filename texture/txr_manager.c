@@ -9,11 +9,10 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
-#include "txr_manager.h"
-
-#include <dc/pvr.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <dc/pvr.h>
 
 #include "../inc/dat_format.h"
 #include "../ui/draw_kos.h"
@@ -21,6 +20,8 @@
 #include "block_pool.h"
 #include "lru.h"
 #include "serial_sanitize.h"
+
+#include "txr_manager.h"
 
 /* CFG for small pvr pool (128x128 16bit, 16 spaces) */
 #define SM_SLOT_NUM  (16)

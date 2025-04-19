@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+
 #include <dc/maple.h>
 
 typedef struct maple_alldevinfo {

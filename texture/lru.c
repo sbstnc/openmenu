@@ -1,8 +1,8 @@
-#include "lru.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "lru.h"
 
 #if DEBUG
 #define DBG_PRINT(...) printf(__VA_ARGS__)

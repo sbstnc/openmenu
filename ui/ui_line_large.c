@@ -8,11 +8,11 @@
  * License: BSD 3-clause "New" or "Revised" License,
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
-#include "ui_line_large.h"
-
 #include <stdio.h>
 
 #include "../backend/gd_list.h"
+
+#include "ui_line_large.h"
 
 /* @Note: whats the plan here? */
 

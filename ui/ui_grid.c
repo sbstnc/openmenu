@@ -8,8 +8,6 @@
  * License: BSD 3-clause "New" or "Revised" License,
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
-#include "ui_grid.h"
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,6 +21,8 @@
 #include "font_prototypes.h"
 #include "global_settings.h"
 #include "ui_menu_credits.h"
+
+#include "ui_grid.h"
 
 /* Scaling */
 #define X_SCALE_4_3          ((float)1.0f)

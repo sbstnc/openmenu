@@ -10,9 +10,9 @@
 
 #pragma once
 
+#include "backend/gd_item.h"
 #include "common.h"
 #include "global_settings.h"
-#include "backend/gd_item.h"
 
 struct theme_color;
 
