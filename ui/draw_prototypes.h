@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <stdint.h> //For the uintX_t types
+
 #include "common.h"
 #ifdef _arch_dreamcast
 #include "draw_kos.h"
