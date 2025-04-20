@@ -46,7 +46,7 @@ int add_pvr_file(const char *path, const char *folder, struct stat *statptr) {
     data_buf = malloc(file_header.chunk_size * file_header.padding0); /* Temporarily use padding0 as num_files */
   } else {
     if (statptr->st_size != file_header.chunk_size) {
-      printf("Err: Filesize mismatch for %s, found %ld vs %d!\n", path, statptr->st_size, file_header.chunk_size);
+      printf("Err: Filesize mismatch for %s, found %lld vs %d!\n", path, statptr->st_size, file_header.chunk_size);
       return -1;
     }
   }
@@ -79,8 +79,10 @@ int add_pvr_file(const char *path, const char *folder, struct stat *statptr) {
     memset(end, '\0', nul_len);
   }
   char *temp_start = temp_id;
-  while (*temp_start)
-    *temp_start++ = toupper(*temp_start);
+  while (*temp_start) {
+    *temp_start = toupper(*temp_start);
+    ++temp_start;
+  }
   temp_id[11] = '\0';
   temp_id[10] = '\0';
   memcpy(&bin_items[file_header.num_chunks].ID, temp_id, sizeof(bin_items->ID));
@@ -89,6 +91,7 @@ int add_pvr_file(const char *path, const char *folder, struct stat *statptr) {
   (void)file_header.num_chunks++;
 
   printf("Added[%d] as %s\n", file_header.num_chunks, temp_id);
+  return 0;
 }
 
 int main(int argc, char **argv) {

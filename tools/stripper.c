@@ -107,7 +107,7 @@ int add_bin_file(const char *path, const char *folder, struct stat *statptr) {
     data_buf = malloc(file_header.chunk_size * file_header.padding0); /* Temporarily use padding0 as num_files */
   } else {
     if (statptr->st_size != file_header.chunk_size) {
-      printf("Err: Filesize mismatch for %s, found %ld vs %d!\n", path, statptr->st_size, file_header.chunk_size);
+      printf("Err: Filesize mismatch for %s, found %lld vs %d!\n", path, statptr->st_size, file_header.chunk_size);
       return -1;
     }
   }
@@ -137,17 +137,22 @@ int add_bin_file(const char *path, const char *folder, struct stat *statptr) {
     memset(end, '\0', sizeof(temp_id) - ((size_t)end - (size_t)temp_id));
   char *temp_start = temp_id;
   while (*temp_start)
-    *temp_start++ = toupper(*temp_start);
+  {
+    *temp_start = toupper(*temp_start);
+    ++temp_start;
+  }
   memcpy(&bin_items[file_header.num_chunks].ID, temp_id, sizeof(bin_items->ID));
 
   bin_items[file_header.num_chunks].offset = file_header.num_chunks + 1;
   (void)file_header.num_chunks++;
 
   printf("Added[%d] as %s\n", file_header.num_chunks, temp_id);
+  return 0;
 }
 
 int print_cb(const char *path, const char *folder, struct stat *statptr) {
   printf("%s\n", path);
+  return 0;
 }
 
 int iterate_dir(const char *path, int (*file_cb)(const char *, const char *, struct stat *)) {
@@ -222,6 +227,7 @@ int iterate_dir(const char *path, int (*file_cb)(const char *, const char *, str
   }
 
   closedir(dir);
+  return 0;
 }
 
 /* DAT loading */

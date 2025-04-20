@@ -259,8 +259,10 @@ int add_bin_file(const char *path, const char *folder, struct stat *statptr) {
     memset(end, '\0', nul_len);
   }
   char *temp_start = temp_id;
-  while (*temp_start)
-    *temp_start++ = toupper(*temp_start);
+  while (*temp_start) {
+    *temp_start = toupper(*temp_start);
+    ++temp_start;
+  }
   temp_id[11] = '\0';
   temp_id[10] = '\0';
   memcpy(&bin_items[file_header.num_chunks].ID, temp_id, sizeof(bin_items->ID));
@@ -271,6 +273,7 @@ int add_bin_file(const char *path, const char *folder, struct stat *statptr) {
   (void)file_header.num_chunks++;
 
   printf("Added[%d] as %s\n", file_header.padding0 + file_header.num_chunks, temp_id);
+  return 0;
 }
 
 int main(int argc, char **argv) {

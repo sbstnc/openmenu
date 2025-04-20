@@ -52,6 +52,7 @@ void write_bin_file(bin_header *file_header, bin_item_raw *bin_items, void *data
 
 static int print_cb(const char *path, const char *folder, struct stat *statptr) {
   printf("%s\n", path);
+  return 0;
 }
 
 int iterate_dir(const char *path, int (*file_cb)(const char *, const char *, struct stat *), bin_header *file_header, bin_item_raw **bin_items) {
@@ -126,4 +127,5 @@ int iterate_dir(const char *path, int (*file_cb)(const char *, const char *, str
   }
 
   closedir(dir);
+  return 0;
 }

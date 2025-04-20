@@ -102,7 +102,7 @@ size_t getline(char **lineptr, size_t *n, FILE *stream) {
 static void write_ini(const char *filename, const char *players, const char *vmu_blocks, const char *accessories, const char *genre, const char *synopsis) {
   FILE *ini_fd = fopen(filename, "w");
   if (!ini_fd) {
-    printf("Error: Couldn't write %s!\n");
+    printf("Error: Couldn't write %s!\n", filename);
     return;
   }
 
