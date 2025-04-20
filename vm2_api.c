@@ -10,7 +10,7 @@
 static uint8_t recv_buff[196];
 
 static void
-vbl_allinfo_callback(maple_frame_t* frm) {
+vbl_allinfo_callback(struct maple_state_str*, maple_frame_t* frm) {
     maple_response_t* resp;
 
     /* So.. did we get a response? */
@@ -65,7 +65,7 @@ send_allinfo(int p, int u) {
 }
 
 static void
-vm2_reply(maple_frame_t* frm) {
+vm2_reply(struct maple_state_str*, maple_frame_t* frm) {
     maple_response_t* resp;
 
     /* So.. did we get a response? */
