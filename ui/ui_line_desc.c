@@ -599,8 +599,8 @@ handle_input_ui(enum control input) {
     switch (input) {
         case LEFT: menu_decrement(1); break;
         case RIGHT: menu_increment(1); break;
-        case UP: menu_decrement(10); break;
-        case DOWN: menu_increment(10); break;
+        case UP: menu_decrement(NUM_ICONS / 2); break;
+        case DOWN: menu_increment(NUM_ICONS / 2); break;
         case TRIG_L: menu_decrement(distance_to_previous_letter()); break;
         case TRIG_R: menu_increment(distance_to_next_letter()); break;
         case A: menu_accept(); break;
