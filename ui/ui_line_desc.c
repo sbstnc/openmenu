@@ -9,6 +9,7 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -285,6 +286,20 @@ menu_changed_item(void) {
     db_get_meta(list_current[current_selected_item]->product, &current_meta);
 }
 
+static bool
+chars_match_for_nav(char c1, char c2) {
+    // Check if chars are digits ('0' through '9')
+    bool c1_is_digit = (c1 >= '0' && c1 <= '9');
+    bool c2_is_digit = (c2 >= '0' && c2 <= '9');
+
+    if (c1_is_digit && c2_is_digit) {
+        // Both are digits, they belong to the same numeric block
+        return true;
+    }
+
+    return (c1 == c2);
+}
+
 static int
 distance_to_next_letter(void) {
     if (list_current == NULL || list_len <= 0) {
@@ -302,10 +317,11 @@ distance_to_next_letter(void) {
     char start_char = list_current[current_selected_item]->name[0];
     int distance = 0;
 
+    // Loop forward to find the first item in a different block
     for (int i = current_selected_item + 1; i < list_len; ++i) {
         distance++;
-
-        if (list_current[i]->name[0] != start_char) {
+        char current_char = list_current[i]->name[0];
+        if (!chars_match_for_nav(start_char, current_char)) {
             return distance;
         }
     }
@@ -329,32 +345,37 @@ distance_to_previous_letter(void) {
     }
 
     char start_char = list_current[anchor]->name[0];
-    int first_diff_index = -1;
+    int first_diff_block_index = -1; // Index of first item in a different block
+
+    // Find the first item backward that's in a *different* block
     for (int i = anchor - 1; i >= 0; --i) {
-        if (list_current[i]->name[0] != start_char) {
-            first_diff_index = i;
+        char current_char = list_current[i]->name[0];
+        if (!chars_match_for_nav(start_char, current_char)) {
+            first_diff_block_index = i;
             break;
         }
     }
 
     int target_index;
-    if (first_diff_index == -1) {
-        // Case A: All previous items matched the start_char. Target is index 0.
+    if (first_diff_block_index == -1) {
+        // Case A: No different block found backward. Target the first item.
         target_index = 0;
     } else {
-        // Case B: Found a different char at first_diff_index.
-        // Now find the beginning of the block this different char belongs to.
-        char prev_block_char = list_current[first_diff_index]->name[0];
-        target_index = first_diff_index; // Assume this is the start, initially
+        // Case B: Found item in different block at first_diff_block_index.
+        // Find the beginning of the block this item belongs to.
+        char prev_block_char = list_current[first_diff_block_index]->name[0];
+        target_index = first_diff_block_index; // Start assuming this index is the target
 
-        // Search backward from the item *before* first_diff_index
-        int j = first_diff_index - 1;
-        while (j >= 0 && list_current[j]->name[0] == prev_block_char) {
-            target_index = j; // Update target to this earlier matching index
+        // Walk backward while items are in the *same* block as prev_block_char
+        int j = first_diff_block_index - 1;
+        while (j >= 0 && chars_match_for_nav(prev_block_char, list_current[j]->name[0])) {
+            target_index = j; // Update target to this earlier index in the same block
             j--;
         }
+        // 'target_index' now holds the index of the first item in the previous block
     }
 
+    // Calculate distance from the 'anchor' index to the target index.
     return anchor - target_index;
 }
 
