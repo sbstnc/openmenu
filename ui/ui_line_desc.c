@@ -285,6 +285,79 @@ menu_changed_item(void) {
     db_get_meta(list_current[current_selected_item]->product, &current_meta);
 }
 
+static int
+distance_to_next_letter(void) {
+    if (list_current == NULL || list_len <= 0) {
+        return 0; // Cannot search an empty or non-existent list
+    }
+
+    if (current_selected_item < 0 || current_selected_item >= list_len) {
+        return 0; // Invalid starting point
+    }
+
+    if (current_selected_item >= list_len - 1) {
+        return 1; // Last item is selected, moving forward will wrap around
+    }
+
+    char start_char = list_current[current_selected_item]->name[0];
+    int distance = 0;
+
+    for (int i = current_selected_item + 1; i < list_len; ++i) {
+        distance++;
+
+        if (list_current[i]->name[0] != start_char) {
+            return distance;
+        }
+    }
+
+    return distance;
+}
+
+static int
+distance_to_previous_letter(void) {
+    if (list_current == NULL || list_len <= 0) {
+        return 0; // Cannot search an empty or non-existent list
+    }
+
+    if (current_selected_item < 0 || current_selected_item >= list_len) {
+        return 0; // Invalid starting point
+    }
+
+    int anchor = current_selected_item;
+    if (current_selected_item == 0) {
+        anchor = list_len - 1; // Anchor calculations at the end of the list
+    }
+
+    char start_char = list_current[anchor]->name[0];
+    int first_diff_index = -1;
+    for (int i = anchor - 1; i >= 0; --i) {
+        if (list_current[i]->name[0] != start_char) {
+            first_diff_index = i;
+            break;
+        }
+    }
+
+    int target_index;
+    if (first_diff_index == -1) {
+        // Case A: All previous items matched the start_char. Target is index 0.
+        target_index = 0;
+    } else {
+        // Case B: Found a different char at first_diff_index.
+        // Now find the beginning of the block this different char belongs to.
+        char prev_block_char = list_current[first_diff_index]->name[0];
+        target_index = first_diff_index; // Assume this is the start, initially
+
+        // Search backward from the item *before* first_diff_index
+        int j = first_diff_index - 1;
+        while (j >= 0 && list_current[j]->name[0] == prev_block_char) {
+            target_index = j; // Update target to this earlier matching index
+            j--;
+        }
+    }
+
+    return anchor - target_index;
+}
+
 static void
 menu_decrement(int amount) {
     if (navigate_timeout > 0) {
@@ -528,8 +601,8 @@ handle_input_ui(enum control input) {
         case RIGHT: menu_increment(1); break;
         case UP: menu_decrement(10); break;
         case DOWN: menu_increment(10); break;
-        case TRIG_L: menu_decrement(25); break;
-        case TRIG_R: menu_increment(25); break;
+        case TRIG_L: menu_decrement(distance_to_previous_letter()); break;
+        case TRIG_R: menu_increment(distance_to_next_letter()); break;
         case A: menu_accept(); break;
         case START: menu_settings(); break;
         case Y: menu_exit(); break;
