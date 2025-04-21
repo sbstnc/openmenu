@@ -42,7 +42,7 @@ Dumps all info about the container, optionally dump to files in input/
 
 void DAT_dump(const dat_file *bin, const char *output) {
   char out_filename[FILENAME_MAX] = {0};
-  mkdir(output, 777);
+  mkdir(output, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
   uint8_t *file_buffer = malloc(bin->chunk_size);
 
   DBG_PRINT("BIN Stats:\nChunk Size: %d\nNum Chunks: %d\n\n", bin->chunk_size, bin->num_chunks);
