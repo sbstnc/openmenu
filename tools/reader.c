@@ -59,6 +59,10 @@ void DAT_dump(const dat_file *bin, const char *output) {
 
     /* Write out */
     FILE *fd = fopen(out_filename, "wb");
+    if (!fd) {
+      perror("Could not open output file for writing");
+      exit(2);
+    }
     int ret_w = fwrite(file_buffer, bin->chunk_size, 1, fd);
     fclose(fd);
   }
