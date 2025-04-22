@@ -24,29 +24,33 @@ recommended method is using the Dev Container.**
 
 If you wish to proceed natively, you will need:
 
-1.  **Git:** For cloning the repository.
+1.  **Git:** For cloning the repository and applying patches.
 2.  **Standard Build Tools:** `make`, a C compiler (GCC is typically used).
 3.  **KallistiOS (KOS) SDK & Toolchain:**
-    - You need a specific version of KallistiOS based on commit
-      `ae3d5ec3ed7bbc0f0ea8fdd9f8d25e68ba7e8673` (as used in the `Dockerfile`).
-    - The KOS source tree must be patched: The file `kos_patch/fs_iso9660.c`
-      from this repository needs to replace the original
-      `kos/kernel/arch/dreamcast/fs/fs_iso9660.c` within the KOS source _before_
-      building KOS itself (see `Dockerfile`).
+    - You need the **`v2.1.x` branch** of KallistiOS (as used in the
+      `Dockerfile`). You can check out a specific tag or commit within that
+      branch if needed.
+    - The KOS source tree must be patched **before building KOS itself**: The
+      patch file `docker/kos_patch/fs_iso9660.patch` from this repository needs
+      to be applied to the KOS source tree using `git apply`. Detailed
+      instructions for applying this patch can be found in
+      `docker/kos_patch/README.md`. This patch adds necessary GDFS support to
+      the `fs_iso9660` filesystem driver.
     - You need to build the `dc-chain` toolchain (SH4 cross-compiler, etc.) and
-      then KOS itself.
+      then KOS itself (after patching).
     - Instructions for setting up a KOS environment can be found in the official
       KOS documentation or guides like the Dreamcast Development Wiki. The
-      process used in the project's `Dockerfile` (`docker/Dockerfile`) can also
-      serve as a reference.
+      process used in this project's `Dockerfile` (`docker/Dockerfile`) can also
+      serve as a reference for building KOS `v2.1.x` and applying the patch.
     - Crucially, you must have the KOS environment variables sourced (typically
       via `source /path/to/kos/environ.sh`) in your shell before attempting to
       compile `openmenu`.
 
 ## Compilation (Native Build)
 
-**Note:** Ensure your KallistiOS environment is correctly set up and sourced in
-your current shell session before running these commands.
+**Note:** Ensure your KallistiOS environment (using the `v2.1.x` branch, patched
+as described above) is correctly set up and sourced in your current shell
+session before running these commands.
 
 1.  **Clone the repository:**
 
@@ -76,8 +80,9 @@ your current shell session before running these commands.
 ## Development using Dev Containers
 
 This project includes a Dev Container configuration for a consistent and
-ready-to-use development environment, including the correctly patched KallistiOS
-SDK. This is the **recommended** way to build and develop `openmenu`.
+ready-to-use development environment. It includes the correctly patched
+KallistiOS SDK (**`v2.1.x` branch** with the `fs_iso9660.patch` applied). This
+is the **recommended** way to build and develop `openmenu`.
 
 **Prerequisites:**
 
@@ -88,8 +93,9 @@ SDK. This is the **recommended** way to build and develop `openmenu`.
 ### Using the Pre-built Image (Recommended)
 
 A pre-built image containing the necessary environment is available on Docker
-Hub (`sbstnc/openmenu-dev:0.1.0` as specified in
-`.devcontainer/devcontainer.json`).
+Hub (`sbstnc/openmenu-dev:0.2.0` as specified in
+`.devcontainer/devcontainer.json`). This image contains KOS `v2.1.x` patched as
+required.
 
 1.  Clone the repository:
     ```bash
@@ -113,13 +119,14 @@ Hub (`sbstnc/openmenu-dev:0.1.0` as specified in
     (`Terminal > New Terminal`). The KOS environment is already set up. You can
     compile the project directly:
     ```bash
-    source /opt/toolchains/dc/kos/environ.sh && make
+    make
     ```
 
 ### Building the Dev Container Image Locally
 
 If you prefer not to use the pre-built image from Docker Hub or want to build it
-yourself:
+yourself (e.g., to incorporate newer KOS updates from the `v2.1.x` branch or
+modify the build process):
 
 1.  Ensure Docker is running.
 2.  Clone the repository:
@@ -132,14 +139,15 @@ yourself:
     make devcontainer
     ```
     **Warning:** This process downloads and compiles the entire KallistiOS
-    toolchain and SDK. It can take a significant amount of time (potentially
-    hours) depending on your machine and network speed.
+    toolchain and SDK (from the `v2.1.x` branch) and applies the necessary
+    patch. It can take a significant amount of time (potentially hours)
+    depending on your machine and network speed.
 4.  Once the build completes successfully, you will have a local Docker image
     tagged `openmenu-dev:latest` (and potentially `openmenu-dev:<version>`).
 5.  **Update Dev Container Configuration:** Before reopening in VS Code, edit
     the `.devcontainer/devcontainer.json` file. Change the `image` property from
-    `"sbstnc/openmenu-dev:0.1.0"` to `"openmenu-dev:latest"` (or the specific
-    version tag you built, e.g., `"openmenu-dev:0.1.0"` if you built that tag
+    `"sbstnc/openmenu-dev:0.2.0"` to `"openmenu-dev:latest"` (or the specific
+    version tag you built, e.g., `"openmenu-dev:0.2.0"` if you built that tag
     locally).
 
     ```diff
@@ -148,8 +156,8 @@ yourself:
     @@ -1,5 +1,5 @@
      {
        "name": "Dreamcast Dev",
-    -  "image": "sbstnc/openmenu-dev:0.1.0",
-    +  "image": "openmenu-dev:latest",
+    -  "image": "sbstnc/openmenu-dev:0.2.0",
+    +  "image": "openmenu-dev:latest", // Or your locally built tag
        "runArgs": [
          "--userns=keep-id"
        ],
