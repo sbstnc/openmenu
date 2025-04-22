@@ -202,10 +202,9 @@ BSD 3-Clause License - see the `LICENSE.Crayon_VMU.md` file for details.
 This project builds upon the work of many individuals in the Dreamcast homebrew
 community. Special thanks to:
 
-- **HaydenKow:** For starting the original openMenu project.
+- **HaydenKow (mrneo240):** For starting the original openMenu project.
 - **megavolt85:** For the version of openMenu this fork is based on, and work on
   the GDEMU SDK aspects.
-- **mrneo240:** For maintaining the upstream fork.
 - **u/westhinksdifferent:** For the UI design mockups.
 - **FlorreW, hasnopants, Roareye:** For their work on the Metadata Database.
 - **sonik-br:** For the GDMENUCardManager tool.
