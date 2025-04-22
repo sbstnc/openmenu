@@ -1,0 +1,36 @@
+diff --git a/kernel/arch/dreamcast/fs/fs_iso9660.c b/kernel/arch/dreamcast/fs/fs_iso9660.c
+index f8445cad..112086d6 100644
+--- a/kernel/arch/dreamcast/fs/fs_iso9660.c
++++ b/kernel/arch/dreamcast/fs/fs_iso9660.c
+@@ -47,6 +47,7 @@ ISO9660 systems, as these were used as references as well.
+ 
+ static int init_percd(void);
+ static int percd_done;
++static int disc_type;
+ 
+ /********************************************************************************/
+ /* Low-level Joliet utils */
+@@ -339,10 +340,12 @@ static int init_percd(void) {
+         return -1;
+     }
+ 
+-    if((i = cdrom_read_toc(&toc, 0)) != 0)
++    if((i = cdrom_read_toc(&toc, (disc_type == CD_GDROM))) != 0)
+         return i;
+ 
+-    if(!(session_base = cdrom_locate_data_track(&toc)))
++    if(disc_type == CD_GDROM)
++        session_base = 45150;
++    else if(!(session_base = cdrom_locate_data_track(&toc)))
+         return -1;
+ 
+     /* Check for joliet extensions */
+@@ -947,7 +950,7 @@ int iso_reset(void) {
+ static int iso_last_status;
+ static int iso_vblank_hnd;
+ static void iso_vblank(uint32 evt, void *data) {
+-    int status, disc_type;
++    int status;
+ 
+     (void)evt;
+     (void)data;

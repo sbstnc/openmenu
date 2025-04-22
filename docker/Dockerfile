@@ -11,6 +11,7 @@ RUN apk add \
   bash \
   build-base \
   cmake \
+  coreutils \
   curl \
   elfutils-dev \
   git \
@@ -33,26 +34,18 @@ RUN addgroup --system ${USER_GROUP} && \
 
 USER ${USER_NAME}:${USER_GROUP}
 
-WORKDIR /opt/toolchains/dc
-
-RUN mkdir /opt/toolchains/dc/kos && \
-  cd /opt/toolchains/dc/kos && \
-  git init && \
-  git remote add origin https://github.com/KallistiOS/KallistiOS.git && \
-  git fetch --depth 1 origin ae3d5ec3ed7bbc0f0ea8fdd9f8d25e68ba7e8673 && \
-  git checkout FETCH_HEAD
+RUN git clone https://github.com/KallistiOS/KallistiOS.git \
+  --depth 1 \
+  -b v2.1.x \
+  /opt/toolchains/dc/kos
 
 RUN cd /opt/toolchains/dc/kos/utils/dc-chain && \
-  mv config.mk.testing.sample config.mk && \
-  sed -i 's/#force_downloader=wget/force_downloader=wget/' config.mk && \
-  ./download.sh && \
-  ./unpack.sh && \
-  make && \
-  ./cleanup.sh
+  make
 
-COPY kos_patch/fs_iso9660.c ./kos/kernel/arch/dreamcast/fs/fs_iso9660.c
+COPY kos_patch/fs_iso9660.patch /opt/toolchains/dc/kos/
 
 RUN cd /opt/toolchains/dc/kos && \
+  git apply fs_iso9660.patch && \
   cp doc/environ.sh.sample environ.sh && \
   source /opt/toolchains/dc/kos/environ.sh && \
   make
