@@ -10,6 +10,8 @@ RUN apk add \
   --update \
   bash \
   build-base \
+  clang19 \
+  clang19-extra-tools \
   cmake \
   coreutils \
   curl \
@@ -40,7 +42,8 @@ RUN git clone https://github.com/KallistiOS/KallistiOS.git \
   /opt/toolchains/dc/kos
 
 RUN cd /opt/toolchains/dc/kos/utils/dc-chain && \
-  make
+  make && \
+  make clean
 
 COPY kos_patch/fs_iso9660.patch /opt/toolchains/dc/kos/
 
@@ -48,7 +51,8 @@ RUN cd /opt/toolchains/dc/kos && \
   git apply fs_iso9660.patch && \
   cp doc/environ.sh.sample environ.sh && \
   source /opt/toolchains/dc/kos/environ.sh && \
-  make
+  make && \
+  make clean
 
 WORKDIR /home/${USER_NAME}
 RUN touch .bashrc && echo "source /opt/toolchains/dc/kos/environ.sh" >> .bashrc

@@ -1,6 +1,6 @@
 {
   "name": "Dreamcast Dev",
-  "image": "sbstnc/openmenu-dev:0.2.0",
+  "image": "sbstnc/openmenu-dev:0.2.1",
   "runArgs": [
     "--userns=keep-id"
   ],

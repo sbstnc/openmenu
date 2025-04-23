@@ -22,7 +22,7 @@ LIBS := -lm ./lib/libcrayon_vmu.a
 # devcontainer image vars
 DEVCONTAINER_BUILD_DATE := $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
 DEVCONTAINER_IMAGE_URL ?= https://hub.docker.com/r/sbstnc/openmenu-dev
-DEVCONTAINER_IMAGE_VERSION ?= 0.1.0
+DEVCONTAINER_IMAGE_VERSION ?= 0.2.1
 DEVCONTAINER_VCS_REF := $(shell git rev-parse --short HEAD)
 DEVCONTAINER_VCS_URL := $(shell git config --get remote.origin.url)
 
