@@ -1,0 +1,62 @@
+name: ci
+
+on:
+  push:
+    paths-ignore:
+      - .gitignore
+      - docker/**
+      - "**/*.md"
+  pull_request:
+    paths-ignore:
+      - .gitignore
+      - docker/**
+      - "**/*.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  openmenu:
+    runs-on: ubuntu-latest
+    container:
+      image: sbstnc/openmenu-dev:0.2.2
+      options: --user root
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+
+      # Workaround for https://github.com/actions/runner-images/issues/6775
+      - run: git config --global --add safe.directory "*"
+
+      - name: Build openmenu
+        run: |
+          source /opt/toolchains/dc/kos/environ.sh
+          cmake --preset dc-release
+          cmake --build --preset dc-release
+
+      - name: Build tools
+        run: |
+          cmake --preset native-tools-release
+          cmake --build --preset native-tools-release
+
+      - name: Upload openmenu artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: openmenu
+          path: |
+            cmake-build-dc-release/bin/*
+          retention-days: 7
+
+      - name: Upload tool artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tools
+          path: |
+            cmake-build-native-tools-release/bin/*
+          retention-days: 7
