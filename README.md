@@ -25,8 +25,10 @@ recommended method is using the Dev Container.**
 If you wish to proceed natively, you will need:
 
 1.  **Git:** For cloning the repository and applying patches.
-2.  **Standard Build Tools:** `make`, a C compiler (GCC is typically used).
-3.  **KallistiOS (KOS) SDK & Toolchain:**
+2.  **CMake:** Version 3.19 or higher.
+3.  **Ninja Build System:** CMake is configured to use Ninja by default in the
+    presets.
+4.  **KallistiOS (KOS) SDK & Toolchain:**
     - You need the **`v2.1.x` branch** of KallistiOS (as used in the
       `Dockerfile`). You can check out a specific tag or commit within that
       branch if needed.
@@ -50,7 +52,8 @@ If you wish to proceed natively, you will need:
 
 **Note:** Ensure your KallistiOS environment (using the `v2.1.x` branch, patched
 as described above) is correctly set up and sourced in your current shell
-session before running these commands.
+session before running these commands. Specifically, the `KOS_CMAKE_TOOLCHAIN`
+environment variable must be set.
 
 1.  **Clone the repository:**
 
@@ -59,22 +62,25 @@ session before running these commands.
     cd openmenu
     ```
 
-2.  **Compile the project:**
+2.  **Compile openmenu:**
 
     ```bash
-    make
+    # Configure using the 'dc-release' preset
+    cmake --preset dc-release
+    # Build using the 'dc-release' preset configuration
+    cmake --build --preset dc-release
     ```
 
     This will use the `kos-cc` compiler and associated tools defined by your KOS
     environment.
 
 3.  **Output:** The compiled binary ready for the GDEMU will be `1ST_READ.BIN`.
-    An ELF file (`themeMenu.elf`) is also generated, which might be useful for
+    An ELF file (`openmenu.elf`) is also generated, which might be useful for
     debugging or emulators.
 
 4.  **Clean:**
     ```bash
-    make clean
+    cmake --build --preset dc-release --target clean
     ```
 
 ## Development using Dev Containers
@@ -119,7 +125,10 @@ required.
     (`Terminal > New Terminal`). The KOS environment is already set up. You can
     compile the project directly:
     ```bash
-    make
+    # Configure using the 'dc-release' preset
+    cmake --preset dc-release
+    # Build using the 'dc-release' preset configuration
+    cmake --build --preset dc-release
     ```
 
 ### Building the Dev Container Image Locally
@@ -136,7 +145,8 @@ modify the build process):
     ```
 3.  Run the make target to build the image:
     ```bash
-    make devcontainer
+    cd docker
+    ./build.sh
     ```
     **Warning:** This process downloads and compiles the entire KallistiOS
     toolchain and SDK (from the `v2.1.x` branch) and applies the necessary
@@ -179,7 +189,7 @@ existing `1ST_READ.BIN` within the `tools/openMenu/menu_data` directory of your
 GDMENU Card Manager installation. After replacing the file, use the GDMENU Card
 Manager tool to prepare your SD card for the GDEMU.
 
-You can potentially run the `themeMenu.elf` file using a Dreamcast emulator that
+You can potentially run the `openmenu.elf` file using a Dreamcast emulator that
 supports ELF loading, or via `dc-load-ip` / `dc-tool` if you have the necessary
 hardware setup (requires `KOS_LOADER` environment variable to be set, see
 `Makefile.mk`'s `run` target).
