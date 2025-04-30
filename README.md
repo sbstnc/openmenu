@@ -93,7 +93,7 @@ is the **recommended** way to build and develop `openmenu`.
 ### Using the Pre-built Image (Recommended)
 
 A pre-built image containing the necessary environment is available on Docker
-Hub (`sbstnc/openmenu-dev:0.2.1` as specified in
+Hub (`sbstnc/openmenu-dev:0.2.2` as specified in
 `.devcontainer/devcontainer.json`). This image contains KOS `v2.1.x` patched as
 required.
 
@@ -146,8 +146,8 @@ modify the build process):
     tagged `openmenu-dev:latest` (and potentially `openmenu-dev:<version>`).
 5.  **Update Dev Container Configuration:** Before reopening in VS Code, edit
     the `.devcontainer/devcontainer.json` file. Change the `image` property from
-    `"sbstnc/openmenu-dev:0.2.1"` to `"openmenu-dev:latest"` (or the specific
-    version tag you built, e.g., `"openmenu-dev:0.2.1"` if you built that tag
+    `"sbstnc/openmenu-dev:0.2.2"` to `"openmenu-dev:latest"` (or the specific
+    version tag you built, e.g., `"openmenu-dev:0.2.2"` if you built that tag
     locally).
 
     ```diff
@@ -156,7 +156,7 @@ modify the build process):
     @@ -1,5 +1,5 @@
      {
        "name": "Dreamcast Dev",
-    -  "image": "sbstnc/openmenu-dev:0.2.1",
+    -  "image": "sbstnc/openmenu-dev:0.2.2",
     +  "image": "openmenu-dev:latest", // Or your locally built tag
        "runArgs": [
          "--userns=keep-id"

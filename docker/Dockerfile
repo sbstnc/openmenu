@@ -22,9 +22,9 @@ RUN apk add \
   libpng-dev \
   mpc1-dev \
   mpfr-dev \
+  ninja \
   patch \
   python3 \
-  ruby-rake \
   texinfo \
   wget
 
