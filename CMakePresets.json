@@ -1,0 +1,96 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 19,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "dc-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "toolchainFile": "$env{KOS_CMAKE_TOOLCHAIN}",
+      "cacheVariables": {
+        "BUILD_DREAMCAST": "ON",
+        "BUILD_PC": "OFF"
+      }
+    },
+    {
+      "name": "dc-debug",
+      "inherits": "dc-base",
+      "displayName": "Dreamcast (Debug)",
+      "description": "Configure for Dreamcast (Debug build)",
+      "binaryDir": "${sourceDir}/cmake-build-dc-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "dc-release",
+      "inherits": "dc-base",
+      "displayName": "Dreamcast (Release)",
+      "description": "Configure for Dreamcast (Release build)",
+      "binaryDir": "${sourceDir}/cmake-build-dc-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "native-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "cacheVariables": {
+        "BUILD_DREAMCAST": "OFF",
+        "BUILD_PC": "ON"
+      }
+    },
+    {
+      "name": "native-tools-debug",
+      "inherits": "native-base",
+      "displayName": "Native Tools (Debug)",
+      "description": "Configure native host tools (Debug build)",
+      "binaryDir": "${sourceDir}/cmake-build-native-tools-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "native-tools-release",
+      "inherits": "native-base",
+      "displayName": "Native Tools (Release)",
+      "description": "Configure native host tools (Release build)",
+      "binaryDir": "${sourceDir}/cmake-build-native-tools-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "dc-debug",
+      "configurePreset": "dc-debug",
+      "displayName": "Build OpenMenu for Dreamcast (Debug)",
+      "description": "Build OpenMenu using the Debug configuration"
+    },
+    {
+      "name": "dc-release",
+      "configurePreset": "dc-release",
+      "displayName": "Build OpenMenu for Dreamcast (Release)",
+      "description": "Build OpenMenu using the Release configuration"
+    },
+    {
+      "name": "native-tools-debug",
+      "configurePreset": "native-tools-debug",
+      "displayName": "Build Native Tools (Debug)",
+      "description": "Build native tools using the Debug configuration"
+    },
+    {
+      "name": "native-tools-release",
+      "configurePreset": "native-tools-release",
+      "displayName": "Build Native Tools (Release)",
+      "description": "Build native tools using the Release configuration"
+    }
+  ],
+  "testPresets": []
+}
