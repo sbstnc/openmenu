@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include <ui/global_settings.h>
+#include <openmenu_settings.h>
 
 struct image;
 

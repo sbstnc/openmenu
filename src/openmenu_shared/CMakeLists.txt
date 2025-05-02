@@ -18,13 +18,11 @@ if (BUILD_DREAMCAST)
     list(APPEND OPENMENUSHARED_DREAMCAST_SOURCES
             src/backend/db_list.c
             src/texture/serial_sanitize.c
-            src/ui/global_settings.c
     )
     list(APPEND OPENMENUSHARED_DREAMCAST_HEADERS
             ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/db_list.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/gdrom/gdrom_fs.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/texture/serial_sanitize.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/ui/global_settings.h
     )
 endif ()
 
@@ -42,5 +40,5 @@ target_sources(openmenu_shared PUBLIC ${OPENMENUSHARED_COMMON_HEADERS} ${OPENMEN
 
 target_link_libraries(openmenu_shared PRIVATE ini uthash)
 if (BUILD_DREAMCAST)
-    target_link_libraries(openmenu_shared PRIVATE crayonvmu)
+    target_link_libraries(openmenu_shared PRIVATE openmenu_settings crayon_savefile)
 endif ()

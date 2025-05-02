@@ -19,7 +19,7 @@
 #include "texture/txr_manager.h"
 #include "ui/draw_prototypes.h"
 #include "ui/font_prototypes.h"
-#include <ui/global_settings.h>
+#include "ui/ui_common.h"
 #include "ui/ui_menu_credits.h"
 
 #include "ui/ui_scroll.h"
@@ -187,8 +187,7 @@ draw_gamelist(void) {
             }
 
             /* Get multidisc settings */
-            openmenu_settings* settings = settings_get();
-            int hide_multidisc = settings->multidisc;
+            int hide_multidisc = sf_multidisc[0];
 
             uint32_t highlight_text_color = cur_theme->colors.highlight_color;
             if (hide_multidisc && (disc_set > 1)) {
@@ -373,8 +372,7 @@ run_cb(void) {
     int disc_set = list_current[current_selected_item]->disc[2] - '0';
 
     /* Get multidisc settings */
-    openmenu_settings* settings = settings_get();
-    int hide_multidisc = settings->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 
     /* prepare to show multidisc chooser menu */
     if (hide_multidisc && (disc_set > 1)) {
@@ -421,8 +419,7 @@ menu_accept(void) {
     int disc_set = list_current[current_selected_item]->disc[2] - '0';
 
     /* Get multidisc settings */
-    openmenu_settings* settings = settings_get();
-    int hide_multidisc = settings->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 
     /* prepare to show multidisc chooser menu */
     if (hide_multidisc && (disc_set > 1)) {
@@ -468,14 +465,13 @@ FUNCTION(UI_NAME, init) {
    * without forcing it and old data doesn't matter */
     txr_empty_small_pool();
     txr_empty_large_pool();
-    openmenu_settings* settings = settings_get();
-    if (settings->custom_theme) {
+    if (sf_custom_theme[0]) {
         int custom_theme_num = 0;
         custom = theme_get_scroll(&custom_theme_num);
-        if ((int)settings->custom_theme_num >= custom_theme_num) {
+        if ((int)sf_custom_theme_num[0] >= custom_theme_num) {
             cur_theme = (theme_scroll*)&default_theme;
         } else {
-            cur_theme = &custom[settings->custom_theme_num];
+            cur_theme = &custom[sf_custom_theme_num[0]];
         }
     } else {
         cur_theme = (theme_scroll*)&default_theme;

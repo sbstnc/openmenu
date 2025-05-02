@@ -23,8 +23,10 @@
 #include "vm2/vm2_api.h"
 #include "ui/common.h"
 #include "ui/dc/input.h"
+#include "ui/ui_common.h"
 #include "ui/draw_prototypes.h"
-#include "ui/global_settings.h"
+#include <openmenu_settings.h>
+#include <openmenu_savefile.h>
 #include "ui/ui_menu_credits.h"
 
 /* UI Collection */
@@ -101,11 +103,11 @@ reload_ui(void) {
 }
 
 static int
-init(void) {
+init() {
     int ret = 0;
 
     /* Load settings */
-    settings_init();
+    savefile_init();
 
     ret += txr_create_small_pool();
     ret += txr_create_large_pool();
@@ -114,10 +116,8 @@ init(void) {
     ret += db_load_DAT();
     ret += theme_manager_load();
 
-    openmenu_settings* cur = settings_get();
-
-    if (!cur->filter) {
-        switch (cur->sort) {
+    if (!sf_filter[0]) {
+        switch (sf_sort[0]) {
             case SORT_NAME: list_set_sort_name(); break;
 
             case SORT_DATE: list_set_sort_region(); break;
@@ -128,14 +128,14 @@ init(void) {
             case SORT_DEFAULT: list_set_sort_default(); break;
         }
     } else {
-        list_set_genre_sort((FLAGS_GENRE)cur->filter - 1, cur->sort);
+        list_set_genre_sort((FLAGS_GENRE)sf_filter[0] - 1, sf_sort[0]);
     }
 
     /* setup internal memory zones */
     draw_init();
 
     /* Load UI */
-    ui_set_choice(cur->ui);
+    ui_set_choice(sf_ui[0]);
 
     return ret;
 }
@@ -333,6 +333,7 @@ main(int argc, char* argv[]) {
 
     if (init()) {
         puts("Init error.");
+        savefile_close();
         return 1;
     }
 
@@ -341,21 +342,21 @@ main(int argc, char* argv[]) {
         (*current_ui_handle_input)(translate_input());
         vid_waitvbl();
         if (need_reload_ui) {
-            ui_set_choice(settings_get()->ui);
+            ui_set_choice(sf_ui[0]);
         } else {
             draw();
         }
     }
 
+    savefile_close();
     return 0;
 }
 
 void
 exit_to_bios(void) {
     bloader_cfg_t* bloader_config = (bloader_cfg_t*)&bloader_data[bloader_size - sizeof(bloader_cfg_t)];
-    openmenu_settings* cur = settings_get();
 
-    bloader_config->enable_wide = cur->aspect;
+    bloader_config->enable_wide = sf_aspect[0];
     if (!strncmp("Dreamcast Fishing Controller", maple_enum_type(0, MAPLE_FUNC_CONTROLLER)->info.product_name, 28)) {
         bloader_config->enable_3d = 0;
     } else {

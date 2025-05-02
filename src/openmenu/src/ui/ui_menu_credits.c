@@ -14,10 +14,14 @@
 #include <backend/db_item.h>
 #include <backend/gd_item.h>
 #include <backend/gd_list.h>
+#include <crayon_savefile/savefile.h>
+#include <openmenu_savefile.h>
+#include <openmenu_settings.h>
 
 #include "ui/draw_kos.h"
 #include "ui/draw_prototypes.h"
 #include "ui/font_prototypes.h"
+#include "ui/ui_common.h"
 
 #include "ui/ui_menu_credits.h"
 
@@ -113,7 +117,6 @@ static uint32_t text_color;
 static uint32_t highlight_color;
 static uint32_t menu_bkg_color;
 static uint32_t menu_bkg_border_color;
-static openmenu_settings* settings = NULL;
 
 void
 set_cur_game_item(const gd_item* id) {
@@ -143,16 +146,13 @@ void
 menu_setup(enum draw_state* state, theme_color* _colors, int* timeout_ptr) {
     common_setup(state, _colors, timeout_ptr);
 
-    /* Keep local pointer to reference */
-    settings = settings_get();
-
-    choices[CHOICE_THEME] = settings->ui;
-    choices[CHOICE_REGION] = settings->region;
-    choices[CHOICE_ASPECT] = settings->aspect;
-    choices[CHOICE_SORT] = settings->sort;
-    choices[CHOICE_FILTER] = settings->filter;
-    choices[CHOICE_BEEP] = settings->beep;
-    choices[CHOICE_MULTIDISC] = settings->multidisc;
+    choices[CHOICE_THEME] = sf_ui[0];
+    choices[CHOICE_REGION] = sf_region[0];
+    choices[CHOICE_ASPECT] = sf_aspect[0];
+    choices[CHOICE_SORT] = sf_sort[0];
+    choices[CHOICE_FILTER] = sf_filter[0];
+    choices[CHOICE_BEEP] = sf_beep[0];
+    choices[CHOICE_MULTIDISC] = sf_multidisc[0];
 
     if (choices[CHOICE_THEME] != UI_SCROLL) {
         menu_choice_array[CHOICE_REGION] = region_choice_text;
@@ -176,8 +176,8 @@ menu_setup(enum draw_state* state, theme_color* _colors, int* timeout_ptr) {
                 choices_max[CHOICE_REGION]++;
                 custom_theme_text[i] = custom_scroll[i].name;
             }
-            if (settings->custom_theme == THEME_ON) {
-                choices[CHOICE_REGION] = settings->custom_theme_num + 1;
+            if (sf_custom_theme[0] == THEME_ON) {
+                choices[CHOICE_REGION] = sf_custom_theme_num[0] + 1;
             }
         }
     }
@@ -219,23 +219,23 @@ menu_accept(void) {
     }
     if (current_choice == CHOICE_SAVE) {
         /* update Global Settings */
-        settings->ui = choices[CHOICE_THEME];
-        settings->region = choices[CHOICE_REGION];
-        settings->aspect = choices[CHOICE_ASPECT];
-        settings->sort = choices[CHOICE_SORT];
-        settings->filter = choices[CHOICE_FILTER];
-        settings->beep = choices[CHOICE_BEEP];
-        settings->multidisc = choices[CHOICE_MULTIDISC];
-        if (choices[CHOICE_THEME] != UI_SCROLL && settings->region > REGION_END) {
-            settings->custom_theme = THEME_ON;
+        sf_ui[0] = choices[CHOICE_THEME];
+        sf_region[0] = choices[CHOICE_REGION];
+        sf_aspect[0] = choices[CHOICE_ASPECT];
+        sf_sort[0] = choices[CHOICE_SORT];
+        sf_filter[0] = choices[CHOICE_FILTER];
+        sf_beep[0] = choices[CHOICE_BEEP];
+        sf_multidisc[0] = choices[CHOICE_MULTIDISC];
+        if (choices[CHOICE_THEME] != UI_SCROLL && sf_region[0] > REGION_END) {
+            sf_custom_theme[0] = THEME_ON;
             int num_default_themes = 0;
-            theme_get_default(settings->aspect, &num_default_themes);
-            settings->custom_theme_num = settings->region - num_default_themes;
-        } else if (choices[CHOICE_THEME] == UI_SCROLL && settings->region > 0) {
-            settings->custom_theme = THEME_ON;
-            settings->custom_theme_num = settings->region - 1;
+            theme_get_default(sf_aspect[0], &num_default_themes);
+            sf_custom_theme_num[0] = sf_region[0] - num_default_themes;
+        } else if (choices[CHOICE_THEME] == UI_SCROLL && sf_region[0] > 0) {
+            sf_custom_theme[0] = THEME_ON;
+            sf_custom_theme_num[0] = sf_region[0] - 1;
         } else {
-            settings->custom_theme = THEME_OFF;
+            sf_custom_theme[0] = THEME_OFF;
         }
 
         /* If not filtering, then plain sort */
@@ -253,7 +253,7 @@ menu_accept(void) {
         }
 
         if (choices[CHOICE_SAVE] == 0 /* Save */) {
-            settings_save();
+            savefile_save();
         }
         extern void reload_ui(void);
         reload_ui();
@@ -477,11 +477,7 @@ draw_popup_menu(int x, int y, int width, int height) {
                    menu_bkg_border_color);
     draw_draw_quad(x, y, width, height, menu_bkg_color);
 
-    if (settings == NULL) {
-        settings = settings_get();
-    }
-
-    if (settings->ui == UI_SCROLL) {
+    if (sf_ui[0] == UI_SCROLL) {
         /* Top header */
         draw_draw_quad(x, y, width, 20, menu_bkg_border_color);
     }
@@ -490,7 +486,7 @@ draw_popup_menu(int x, int y, int width, int height) {
 void
 draw_menu_tr(void) {
     z_set_cond(205.0f);
-    if (settings->ui == UI_SCROLL) {
+    if (sf_ui[0] == UI_SCROLL) {
         /* Menu size and placement */
         const int line_height = 24;
         const int width = 320;
@@ -606,7 +602,7 @@ void
 draw_credits_tr(void) {
     z_set_cond(205.0f);
 
-    if (settings->ui == UI_SCROLL) {
+    if (sf_ui[0] == UI_SCROLL) {
         /* Menu size and placement */
         const int line_height = 24;
         const int width = 320;
@@ -674,7 +670,7 @@ draw_multidisc_tr(void) {
     int multidisc_len = list_multidisc_length();
 
     z_set_cond(205.0f);
-    if (settings->ui == UI_SCROLL) {
+    if (sf_ui[0] == UI_SCROLL) {
         /* Menu size and placement */
         const int line_height = 24;
         const int width = 320;
@@ -759,7 +755,7 @@ draw_exit_tr(void) {
     /* Draw a popup in the middle of the screen */
     draw_popup_menu(160, 120, 180, 80);
 
-    if (settings->ui == UI_SCROLL) {
+    if (sf_ui[0] == UI_SCROLL) {
         font_bmp_begin_draw();
         font_bmp_set_color(text_color);
 
@@ -785,7 +781,7 @@ draw_codebreaker_tr(void) {
     /* Draw a popup in the middle of the screen */
     draw_popup_menu(160, 120, 190, 80);
 
-    if (settings->ui == UI_SCROLL) {
+    if (sf_ui[0] == UI_SCROLL) {
         font_bmp_begin_draw();
         font_bmp_set_color(text_color);
 

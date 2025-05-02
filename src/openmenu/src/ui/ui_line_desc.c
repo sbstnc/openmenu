@@ -21,7 +21,7 @@
 #include "texture/txr_manager.h"
 #include "ui/draw_prototypes.h"
 #include "ui/font_prototypes.h"
-#include <ui/global_settings.h>
+#include "ui/ui_common.h"
 #include "ui/ui_menu_credits.h"
 
 #include "ui/ui_line_desc.h"
@@ -184,8 +184,7 @@ draw_game_meta(void) {
     }
 
     /* Get multidisc settings */
-    openmenu_settings* settings = settings_get();
-    int hide_multidisc = settings->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 
     /* Game Title */
     font_bmf_begin_draw();
@@ -428,8 +427,7 @@ run_cb(void) {
     int disc_set = list_current[current_selected_item]->disc[2] - '0';
 
     /* Get multidisc settings */
-    openmenu_settings* settings = settings_get();
-    int hide_multidisc = settings->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 
     /* prepare to show multidisc chooser menu */
     if (hide_multidisc && (disc_set > 1)) {
@@ -478,8 +476,7 @@ menu_accept(void) {
     int disc_set = list_current[current_selected_item]->disc[2] - '0';
 
     /* Get multidisc settings */
-    openmenu_settings* settings = settings_get();
-    int hide_multidisc = settings->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 
     /* prepare to show multidisc chooser menu */
     if (hide_multidisc && (disc_set > 1)) {
@@ -547,18 +544,17 @@ FUNCTION(UI_NAME, init) {
     txr_empty_small_pool();
     txr_empty_large_pool();
     /* Set region from preferences */
-    openmenu_settings* settings = settings_get();
-    region_current = settings->region;
-    recalculate_aspect(settings->aspect);
+    region_current = sf_region[0];
+    recalculate_aspect(sf_aspect[0]);
 
     /* Get the current themes, original + custom */
-    region_themes = theme_get_default(settings->aspect, &num_default_themes);
+    region_themes = theme_get_default(sf_aspect[0], &num_default_themes);
     custom_themes = theme_get_custom(&num_custom_themes);
 
     /* Enable custom theme if needed */
-    int use_custom_theme = settings->custom_theme;
+    int use_custom_theme = sf_custom_theme[0];
     if (use_custom_theme) {
-        int custom_theme_num = settings->custom_theme_num;
+        int custom_theme_num = sf_custom_theme_num[0];
         region_current = REGION_END + 1 + custom_theme_num;
     }
 
@@ -610,7 +606,7 @@ FUNCTION(UI_NAME, init) {
   texman_reserve_memory(txr_icons_black.width, txr_icons_black.height, 2 /* 16Bit */);
 #endif
 
-    font_bmf_init("FONT/BASILEA.FNT", "FONT/BASILEA_W.PVR", settings->aspect);
+    font_bmf_init("FONT/BASILEA.FNT", "FONT/BASILEA_W.PVR", sf_aspect[0]);
 
     printf("Texture scratch free: %d/%d KB (%d/%d bytes)\n", texman_get_space_available() / 1024,
            TEXMAN_BUFFER_SIZE / 1024, texman_get_space_available(), TEXMAN_BUFFER_SIZE);

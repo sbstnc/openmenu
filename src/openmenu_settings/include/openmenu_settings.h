@@ -1,21 +1,52 @@
-/*
- * File: global_settings.h
- * Project: ui
- * File Created: Monday, 12th July 2021 10:33:26 am
- * Author: Hayden Kowalchuk
- * -----
- * Copyright (c) 2021 Hayden Kowalchuk, Hayden Kowalchuk
- * License: BSD 3-clause "New" or "Revised" License, http://www.opensource.org/licenses/BSD-3-Clause
- */
+#ifndef OPENMENU_SETTINGS_H
+#define OPENMENU_SETTINGS_H
 
-#pragma once
+#include <crayon_savefile/savefile.h>
 
-#include <stdint.h>
-#include <stdio.h>
+extern uint8_t* sf_region;
+#define sf_region_type   CRAYON_TYPE_UINT8
+#define sf_region_length 1
 
-extern void exit_to_bios(void);
-extern int cb_multidisc;
-extern int start_cb;
+extern uint8_t* sf_aspect;
+#define sf_aspect_type   CRAYON_TYPE_UINT8
+#define sf_aspect_length 1
+
+extern uint8_t* sf_ui;
+#define sf_ui_type   CRAYON_TYPE_UINT8
+#define sf_ui_length 1
+
+extern uint8_t* sf_sort;
+#define sf_sort_type   CRAYON_TYPE_UINT8
+#define sf_sort_length 1
+
+extern uint8_t* sf_filter;
+#define sf_filter_type   CRAYON_TYPE_UINT8
+#define sf_filter_length 1
+
+extern uint8_t* sf_beep;
+#define sf_beep_type   CRAYON_TYPE_UINT8
+#define sf_beep_length 1
+
+extern uint8_t* sf_multidisc;
+#define sf_multidisc_type   CRAYON_TYPE_UINT8
+#define sf_multidisc_length 1
+
+extern uint8_t* sf_custom_theme;
+#define sf_custom_theme_type   CRAYON_TYPE_UINT8
+#define sf_custom_theme_length 1
+
+extern uint8_t* sf_custom_theme_num;
+#define sf_custom_theme_num_type   CRAYON_TYPE_UINT8
+#define sf_custom_theme_num_length 1
+
+enum savefile_version {
+    SFV_INITIAL = 1,
+    SFV_LATEST_PLUS_ONE //DON'T REMOVE
+};
+
+#define VAR_STILL_PRESENT SFV_LATEST_PLUS_ONE
+
+#define SFV_CURRENT       (SFV_LATEST_PLUS_ONE - 1)
 
 typedef enum CFG_REGION {
     REGION_START = 0,
@@ -96,27 +127,10 @@ typedef enum CFG_CUSTOM_THEME_NUM {
     THEME_NUM_END = THEME_9
 } CFG_CUSTOM_THEME_NUM;
 
-typedef struct openmenu_settings {
-    char identifier[2]; /* OM */
-    uint8_t version;    /* 0x01 */
-    uint8_t padding;    /* 0x00 */
-    CFG_REGION region;
-    CFG_ASPECT aspect;
-    CFG_UI ui;
-    CFG_SORT sort;
-    CFG_FILTER filter;
-    CFG_BEEP beep;
-    CFG_MULTIDISC multidisc;
-    CFG_CUSTOM_THEME custom_theme;
-    CFG_CUSTOM_THEME_NUM custom_theme_num;
-} openmenu_settings;
-
 typedef CFG_REGION region;
 
 enum draw_state { DRAW_UI = 0, DRAW_MULTIDISC, DRAW_EXIT, DRAW_MENU, DRAW_CREDITS, DRAW_CODEBREAKER };
 
-void settings_init(void);
-void settings_load(void);
-void settings_save(void);
-void settings_validate(void);
-openmenu_settings* settings_get(void);
+void settings_sanitize();
+
+#endif //OPENMENU_SETTINGS_H

@@ -18,29 +18,13 @@ if (BUILD_PC)
 endif ()
 
 # --- Shared Dependencies ---
-set(CRAYON_VMU_DIR ${CMAKE_SOURCE_DIR}/lib/crayon_vmu)
-add_library(crayonvmu STATIC IMPORTED GLOBAL)
-set_target_properties(crayonvmu PROPERTIES
-        IMPORTED_LOCATION "${CRAYON_VMU_DIR}/lib/libcrayon_vmu.a"
-        INTERFACE_INCLUDE_DIRECTORIES "${CRAYON_VMU_DIR}/include"
-)
-if (NOT EXISTS ${CRAYON_VMU_DIR}/lib/libcrayon_vmu.a)
-    message(FATAL_ERROR "CrayonVmu library not found at ${CRAYON_VMU_DIR}/lib/libcrayon_vmu.a")
-endif ()
-if (NOT EXISTS ${CRAYON_VMU_DIR}/include)
-    message(WARNING "Include directory for CrayonVmu library not found at ${CRAYON_VMU_DIR}/include")
-endif ()
-
 # UtHash (Header Only)
 add_library(uthash INTERFACE)
 target_include_directories(uthash INTERFACE
         ${CMAKE_SOURCE_DIR}/external/uthash/include
 )
-
-# Easing Library
+add_subdirectory(external/crayon_savefile)
 add_subdirectory(external/easing)
-
-# INI Parser Library
 add_subdirectory(external/ini)
 
 add_subdirectory(src)

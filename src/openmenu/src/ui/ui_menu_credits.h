@@ -12,7 +12,7 @@
 
 #include <backend/gd_item.h>
 #include "ui/common.h"
-#include <ui/global_settings.h>
+#include <openmenu_settings.h>
 
 struct theme_color;
 

@@ -1,3 +1,4 @@
+add_subdirectory(openmenu_settings)
 add_subdirectory(openmenu_shared)
 
 # --- Conditional Target Builds ---

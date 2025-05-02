@@ -30,7 +30,7 @@
 #endif
 
 #ifndef STANDALONE_BINARY
-#include "ui/global_settings.h"
+#include <openmenu_settings.h>
 #endif
 
 /* Base internal original */
@@ -222,7 +222,7 @@ list_temp_reset(void) {
     int base_idx, temp_idx = 0;
 
 #ifdef _arch_dreamcast
-    int hide_multidisc = settings_get()->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 #else
     int hide_multidisc = 0;
 #endif
@@ -286,7 +286,7 @@ void
 list_set_sort_filter(const char type, int num) {
 #ifdef _arch_dreamcast
     int base_idx, temp_idx = 1;
-    int hide_multidisc = settings_get()->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 
     FLAGS_GENRE matching_genre = (1 << num);
 
@@ -360,7 +360,7 @@ list_set_genre(int matching_genre) {
 #if !defined(STANDALONE_BINARY)
     int base_idx, temp_idx = 0;
 
-    int hide_multidisc = settings_get()->multidisc;
+    int hide_multidisc = sf_multidisc[0];
 
     /* Skip openMenu itself */
     for (base_idx = 1; base_idx < num_items_BASE; base_idx++) {

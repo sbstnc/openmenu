@@ -19,6 +19,7 @@ set(OPENMENU_SOURCES
         src/ui/ui_menu_credits.c
         src/ui/ui_scroll.c
         src/vm2/vm2_api.c
+        src/ui/ui_common.h
 )
 
 add_executable(openmenu ${OPENMENU_SOURCES})
@@ -30,11 +31,12 @@ target_include_directories(openmenu
 
 target_link_libraries(openmenu
         PRIVATE
-        crayonvmu
+        crayon_savefile
         uthash
         easing
         ini
         openmenu_shared
+        openmenu_settings
 )
 
 if (NOT DEFINED KOS_OBJCOPY)
