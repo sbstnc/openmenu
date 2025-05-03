@@ -204,8 +204,8 @@ page.
 The core code of this project is licensed under the Modified BSD License - see
 the `LICENSE.md` file for details.
 
-The included Crayon_VMU library (`lib/libcrayon_vmu.a`) is licensed under the
-BSD 3-Clause License - see the `LICENSE.Crayon_VMU.md` file for details.
+External libraries included in the `external` directory have their own licenses.
+Please refer to the respective directories for details.
 
 ## Acknowledgements
 
