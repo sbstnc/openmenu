@@ -3,13 +3,13 @@ set(OPENMENUSHARED_COMMON_SOURCES
         src/texture/dat_reader.c
 )
 set(OPENMENUSHARED_COMMON_HEADERS
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/dat_format.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/db_item.def
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/db_item.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/gd_item.def
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/gd_item.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/gd_list.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/dbgprint.h
+        include/dbgprint.h
+        include/backend/dat_format.h
+        include/backend/db_item.def
+        include/backend/db_item.h
+        include/backend/gd_item.def
+        include/backend/gd_item.h
+        include/backend/gd_list.h
 )
 
 set(OPENMENUSHARED_DREAMCAST_SOURCES "")
@@ -20,13 +20,14 @@ if (BUILD_DREAMCAST)
             src/texture/serial_sanitize.c
     )
     list(APPEND OPENMENUSHARED_DREAMCAST_HEADERS
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/backend/db_list.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/gdrom/gdrom_fs.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/texture/serial_sanitize.h
+            include/backend/db_list.h
+            include/gdrom/gdrom_fs.h
+            include/texture/serial_sanitize.h
     )
 endif ()
 
 add_library(openmenu_shared STATIC ${OPENMENUSHARED_COMMON_SOURCES} ${OPENMENUSHARED_DREAMCAST_SOURCES})
+target_sources(openmenu_shared PUBLIC ${OPENMENUSHARED_COMMON_HEADERS} ${OPENMENUSHARED_DREAMCAST_HEADERS})
 
 target_include_directories(openmenu_shared
         PUBLIC
@@ -35,8 +36,6 @@ target_include_directories(openmenu_shared
         PRIVATE
         src
 )
-
-target_sources(openmenu_shared PUBLIC ${OPENMENUSHARED_COMMON_HEADERS} ${OPENMENUSHARED_DREAMCAST_HEADERS})
 
 target_link_libraries(openmenu_shared PRIVATE ini uthash)
 if (BUILD_DREAMCAST)
