@@ -360,7 +360,7 @@ exit_to_bios(void) {
     if (!strncmp("Dreamcast Fishing Controller", maple_enum_type(0, MAPLE_FUNC_CONTROLLER)->info.product_name, 28)) {
         bloader_config->enable_3d = 0;
     } else {
-        bloader_config->enable_3d = 1;
+        bloader_config->enable_3d = sf_bios_3d[0];
     }
 
     if (vm2_dev) {

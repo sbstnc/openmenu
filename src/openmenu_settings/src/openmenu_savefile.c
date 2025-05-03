@@ -38,6 +38,7 @@ savefile_defaults() {
     sf_multidisc[0] = MULTIDISC_SHOW;
     sf_custom_theme[0] = THEME_OFF;
     sf_custom_theme_num[0] = THEME_0;
+    sf_bios_3d[0] = BIOS_3D_OFF;
 }
 
 //THIS IS USED BY THE CRAYON SAVEFILE DESERIALISER WHEN LOADING A SAVE FROM AN OLDER VERSION
@@ -45,6 +46,9 @@ savefile_defaults() {
 int8_t
 update_savefile(void** loaded_variables, crayon_savefile_version_t loaded_version,
                 crayon_savefile_version_t latest_version) {
+    if (loaded_version < SFV_BIOS_3D) {
+        sf_bios_3d[0] = BIOS_3D_OFF;
+    }
     return 0;
 }
 
@@ -92,6 +96,8 @@ setup_savefile(crayon_savefile_details_t* details) {
                                  VAR_STILL_PRESENT);
     crayon_savefile_add_variable(details, &sf_custom_theme_num, sf_custom_theme_num_type, sf_custom_theme_num_length,
                                  SFV_INITIAL, VAR_STILL_PRESENT);
+    crayon_savefile_add_variable(details, &sf_bios_3d, sf_bios_3d_type, sf_bios_3d_length, SFV_BIOS_3D,
+                                 VAR_STILL_PRESENT);
 
     if (crayon_savefile_solidify(details)) {
         return 1;

@@ -9,6 +9,7 @@ uint8_t* sf_beep;
 uint8_t* sf_multidisc;
 uint8_t* sf_custom_theme;
 uint8_t* sf_custom_theme_num;
+uint8_t* sf_bios_3d;
 
 void
 settings_sanitize() {
@@ -50,5 +51,9 @@ settings_sanitize() {
 
     if (sf_custom_theme[0]) {
         sf_region[0] = REGION_END + 1 + sf_custom_theme_num[0];
+    }
+
+    if ((sf_beep[0] < BIOS_3D_START) || (sf_beep[0] > BIOS_3D_END)) {
+        sf_beep[0] = BIOS_3D_OFF;
     }
 }

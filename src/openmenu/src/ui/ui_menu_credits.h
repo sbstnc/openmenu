@@ -11,8 +11,8 @@
 #pragma once
 
 #include <backend/gd_item.h>
-#include "ui/common.h"
 #include <openmenu_settings.h>
+#include "ui/common.h"
 
 struct theme_color;
 

@@ -27,12 +27,13 @@
 
 #pragma region Settings_Menu
 
-static const char* menu_choice_text[] = {"Style", "Theme", "Aspect", "Beep", "Sort", "Filter", "Multidisc"};
+static const char* menu_choice_text[] = {"Style", "Theme", "Aspect", "Beep", "3D BIOS", "Sort", "Filter", "Multidisc"};
 static const char* theme_choice_text[] = {"LineDesc", "Grid3", "Scroll"};
 static const char* region_choice_text[] = {"NTSC-U", "NTSC-J", "PAL"};
 static const char* region_choice_text1[] = {"GDMENU"};
 static const char* aspect_choice_text[] = {"4:3", "16:9"};
 static const char* beep_choice_text[] = {"Off", "On"};
+static const char* bios_3d_choice_text[] = {"Off", "On"};
 static const char* sort_choice_text[] = {"Default", "Name", "Region", "Genre"};
 static const char* filter_choice_text[] = {"All",      "Action",   "Racing",   "Simulation", "Sports",     "Lightgun",
                                            "Fighting", "Shooter",  "Survival", "Adventure",  "Platformer", "RPG",
@@ -55,6 +56,7 @@ static const gd_item* cur_game_item = NULL;
 static int REGION_CHOICES = (sizeof(region_choice_text) / sizeof(region_choice_text)[0]);
 #define ASPECT_CHOICES    (sizeof(aspect_choice_text) / sizeof(aspect_choice_text)[0])
 #define BEEP_CHOICES      (sizeof(beep_choice_text) / sizeof(beep_choice_text)[0])
+#define BIOS_3D_CHOICES   (sizeof(bios_3d_choice_text) / sizeof(bios_3d_choice_text)[0])
 #define SORT_CHOICES      (sizeof(sort_choice_text) / sizeof(sort_choice_text)[0])
 #define FILTER_CHOICES    (sizeof(filter_choice_text) / sizeof(filter_choice_text)[0])
 #define MULTIDISC_CHOICES (sizeof(multidisc_choice_text) / sizeof(multidisc_choice_text)[0])
@@ -65,6 +67,7 @@ typedef enum MENU_CHOICE {
     CHOICE_REGION,
     CHOICE_ASPECT,
     CHOICE_BEEP,
+    CHOICE_BIOS_3D,
     CHOICE_SORT,
     CHOICE_FILTER,
     CHOICE_MULTIDISC,
@@ -77,11 +80,11 @@ typedef enum MENU_CHOICE {
 
 static int choices[MENU_CHOICES + 1];
 static int choices_max[MENU_CHOICES + 1] = {
-    THEME_CHOICES,     3, ASPECT_CHOICES, BEEP_CHOICES, SORT_CHOICES, FILTER_CHOICES,
+    THEME_CHOICES,     3, ASPECT_CHOICES, BEEP_CHOICES, BIOS_3D_CHOICES, SORT_CHOICES, FILTER_CHOICES,
     MULTIDISC_CHOICES, 2 /* Apply/Save */};
-static const char** menu_choice_array[MENU_CHOICES] = {theme_choice_text,    region_choice_text, aspect_choice_text,
-                                                       beep_choice_text,     sort_choice_text,   filter_choice_text,
-                                                       multidisc_choice_text};
+static const char** menu_choice_array[MENU_CHOICES] = {theme_choice_text,  region_choice_text,   aspect_choice_text,
+                                                       beep_choice_text,   bios_3d_choice_text,  sort_choice_text,
+                                                       filter_choice_text, multidisc_choice_text};
 static int current_choice = CHOICE_START;
 static int* input_timeout_ptr = NULL;
 
@@ -152,6 +155,7 @@ menu_setup(enum draw_state* state, theme_color* _colors, int* timeout_ptr) {
     choices[CHOICE_SORT] = sf_sort[0];
     choices[CHOICE_FILTER] = sf_filter[0];
     choices[CHOICE_BEEP] = sf_beep[0];
+    choices[CHOICE_BIOS_3D] = sf_bios_3d[0];
     choices[CHOICE_MULTIDISC] = sf_multidisc[0];
 
     if (choices[CHOICE_THEME] != UI_SCROLL) {
@@ -225,6 +229,7 @@ menu_accept(void) {
         sf_sort[0] = choices[CHOICE_SORT];
         sf_filter[0] = choices[CHOICE_FILTER];
         sf_beep[0] = choices[CHOICE_BEEP];
+        sf_bios_3d[0] = choices[CHOICE_BIOS_3D];
         sf_multidisc[0] = choices[CHOICE_MULTIDISC];
         if (choices[CHOICE_THEME] != UI_SCROLL && sf_region[0] > REGION_END) {
             sf_custom_theme[0] = THEME_ON;

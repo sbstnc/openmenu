@@ -39,8 +39,13 @@ extern uint8_t* sf_custom_theme_num;
 #define sf_custom_theme_num_type   CRAYON_TYPE_UINT8
 #define sf_custom_theme_num_length 1
 
+extern uint8_t* sf_bios_3d;
+#define sf_bios_3d_type   CRAYON_TYPE_UINT8
+#define sf_bios_3d_length 1
+
 enum savefile_version {
     SFV_INITIAL = 1,
+    SFV_BIOS_3D,
     SFV_LATEST_PLUS_ONE //DON'T REMOVE
 };
 
@@ -126,6 +131,13 @@ typedef enum CFG_CUSTOM_THEME_NUM {
     THEME_9,
     THEME_NUM_END = THEME_9
 } CFG_CUSTOM_THEME_NUM;
+
+typedef enum CFG_BIOS_3D {
+    BIOS_3D_START = 0,
+    BIOS_3D_OFF = BIOS_3D_START,
+    BIOS_3D_ON,
+    BIOS_3D_END = BIOS_3D_ON
+} CFG_BIOS_3D;
 
 typedef CFG_REGION region;
 
