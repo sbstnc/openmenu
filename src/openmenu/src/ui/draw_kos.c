@@ -148,13 +148,12 @@ draw_load_texture_from_DAT_to_buffer(const struct dat_file* bin, const char* ID,
         img->height = img_empty_boxart.height;
         img->format = img_empty_boxart.format;
         return img;
-    } else {
-        txr =
-            load_pvr_from_buffer_to_buffer(pvr_get_internal_buffer(), &img->width, &img->height, &img->format, buffer);
-        img->texture = txr;
-
-        return user;
     }
+
+    txr = load_pvr_from_buffer_to_buffer(pvr_get_internal_buffer(), &img->width, &img->height, &img->format, buffer);
+    img->texture = txr;
+
+    return user;
 }
 
 /* draws an image at coords of a given size */

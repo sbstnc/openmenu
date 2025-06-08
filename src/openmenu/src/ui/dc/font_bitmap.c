@@ -64,9 +64,6 @@ font_bmp_begin_draw() {
                      font.texture.texture, PVR_FILTER_BILINEAR);
     pvr_poly_compile(&font_header, &tmp);
 #endif
-
-    /* Start a textured polygon set (with the font texture) */
-    // pvr_prim(&font_header, sizeof(font_header));
 }
 
 void
@@ -203,18 +200,6 @@ _font_bmp_draw_string(int x1, int y1, const char* str) {
 void
 font_bmp_draw_sub_wrap(int x1, int y1, int width, const char* str) {
     (void)width;
-#if 0
-  int x_start = x1;
-  do {
-    unsigned char chr = (*str) + (1 * 128);
-    font_draw_char(x1, y1, color, chr, 0);
-    x1 += (int)(char_widths[chr - 32] * FONT_SIZE_SUB + 1);
-    if ((x1 - x_start >= width) && (*str == ' ')) {
-      y1 += (FONT_HEIGHT * FONT_SIZE_SUB) + 4;
-      x1 = x_start;
-    }
-  }  while (*++str) {
-#endif
     _font_bmp_draw_string(x1, y1, str);
 }
 

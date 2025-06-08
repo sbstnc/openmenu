@@ -20,12 +20,6 @@ vbl_allinfo_callback(struct maple_state_str*, maple_frame_t* frm) {
         /* Copy in the new buff */
         memcpy(recv_buff, resp, 196);
     }
-    /*else
-  {
-          printf("maple: bad response %d on device\n",resp->response);
-          memcpy(recv_buff, resp, 196);
-
-  }*/
 
     maple_frame_unlock(frm);
     genwait_wake_all(frm);
@@ -73,8 +67,6 @@ vm2_reply(struct maple_state_str*, maple_frame_t* frm) {
 
     if (resp->response != MAPLE_RESPONSE_OK) {
         printf("maple: bad response %d on device, wait ACK\n", resp->response);
-    } else {
-        printf("set image done\n");
     }
 
     memcpy(recv_buff, resp, 4);
@@ -144,8 +136,6 @@ check_vm2_present(maple_device_t* dev) {
     if (!strncasecmp(info->extended, "VM2 by Dreamware", 16) || !strncasecmp(info->extended, "USB RP2040 EMU  ", 16)) {
         return 1;
     }
-
-    printf("check_vm2_present ERROR: %s\n", info->extended);
 
     return 0;
 }

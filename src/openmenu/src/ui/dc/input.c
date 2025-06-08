@@ -47,10 +47,6 @@ INPT_ReceiveFromHost(inputs _in) {
 
     /* Handle Analog Axes Values */
     /* Loops through 4 Axes for 2 Analog Sticks */
-    /*for (int index = 0; index < 2; index++)
-    {
-        uint8_t *axes_in = (&_in.axes_1) + index;
-    }*/
     _current.axes_1 = _in.axes_1;
     _current.axes_2 = _in.axes_2;
 

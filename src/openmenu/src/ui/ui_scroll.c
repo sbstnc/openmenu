@@ -158,7 +158,7 @@ draw_bg_layers(void) {
 
 static void
 draw_gamelist(void) {
-    char buffer[128];
+    char buffer[192];
     const int X_ADJUST_TEXT = 7;
     const int Y_ADJUST_TEXT = 4;
     const int Y_ADJUST_CRSR = 3; /* 2 pixels higher than text */
@@ -177,7 +177,8 @@ draw_gamelist(void) {
             break;
         }
 
-        sprintf(buffer, "%02d %s", current_starting_index + i + 1, list_current[current_starting_index + i]->name);
+        snprintf(buffer, 191, "%02d %s", current_starting_index + i + 1,
+                 list_current[current_starting_index + i]->name);
         if ((current_starting_index + i) == current_selected_item) {
             /* grab the disc number and if there is more than one */
             int disc_set = list_current[current_selected_item]->disc[2] - '0';
