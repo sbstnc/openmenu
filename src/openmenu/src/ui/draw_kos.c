@@ -9,6 +9,7 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
+#include <math.h>
 #include <stdio.h>
 
 #include <backend/dat_format.h>
@@ -16,8 +17,6 @@
 #include "ui/font_prototypes.h"
 
 #include "ui/draw_kos.h"
-
-extern int round(float x);
 
 image img_empty_boxart;
 image img_dir_boxart;
