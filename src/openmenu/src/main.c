@@ -88,15 +88,6 @@ ui_set_choice(int choice) {
     (*current_ui_setup)();
 }
 
-int
-round(float x) {
-    if (x < 0.0f) {
-        return (int)(x - 0.5f);
-    } else {
-        return (int)(x + 0.5f);
-    }
-}
-
 void
 reload_ui(void) {
     need_reload_ui = 1;
