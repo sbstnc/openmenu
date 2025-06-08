@@ -17,17 +17,18 @@
 #include <dc/maple/controller.h>
 #include <dc/pvr.h>
 #include <dc/video.h>
+#include <kos/thread.h>
 
 #include <backend/db_list.h>
 #include <backend/gd_list.h>
-#include "vm2/vm2_api.h"
+#include <openmenu_savefile.h>
+#include <openmenu_settings.h>
 #include "ui/common.h"
 #include "ui/dc/input.h"
-#include "ui/ui_common.h"
 #include "ui/draw_prototypes.h"
-#include <openmenu_settings.h>
-#include <openmenu_savefile.h>
+#include "ui/ui_common.h"
 #include "ui/ui_menu_credits.h"
+#include "vm2/vm2_api.h"
 
 /* UI Collection */
 #include "ui/ui_grid.h"
