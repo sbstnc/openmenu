@@ -27,11 +27,7 @@ vbl_allinfo_callback(struct maple_state_str*, maple_frame_t* frm) {
 
 /* Send a ALLINFO command for the given port/unit */
 static int
-send_allinfo(int p, int u) {
-    maple_device_t* dev;
-
-    dev = &maple_state.ports[p].units[u];
-
+send_allinfo(maple_device_t* dev) {
     // Reserve access; if we don't get it, forget about it
     if (maple_frame_lock(&dev->frame) < 0) {
         return -1;
@@ -40,8 +36,8 @@ send_allinfo(int p, int u) {
     // Setup our autodetect frame to probe at a new device
     maple_frame_init(&dev->frame);
     dev->frame.cmd = MAPLE_COMMAND_ALLINFO;
-    dev->frame.dst_port = p;
-    dev->frame.dst_unit = u;
+    dev->frame.dst_port = dev->port;
+    dev->frame.dst_unit = dev->unit;
     dev->frame.callback = vbl_allinfo_callback;
     maple_queue_frame(&dev->frame);
 
@@ -127,7 +123,7 @@ check_vm2_present(maple_device_t* dev) {
     /* Clear the old buffer */
     memset(recv_buff, 0, 196);
 
-    if (send_allinfo(dev->port, dev->unit) != MAPLE_EOK) {
+    if (send_allinfo(dev) != MAPLE_EOK) {
         return 0;
     }
 
