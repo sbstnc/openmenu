@@ -9,12 +9,12 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
+#include <dirent.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
 
 #include <ini.h>
-#include <gdrom/gdrom_fs.h>
 #include "ui/draw_prototypes.h"
 
 #include "ui/theme_manager.h"
@@ -238,15 +238,14 @@ theme_read(const char* filename, void* theme, int type) {
 static void
 load_themes(char* basePath) {
     char path[128];
-    DIRENT_TYPE dp;
-    DIR_TYPE dir = opendir(basePath);
+    struct dirent* dp;
+    DIR* dir = opendir(basePath);
 
     if (!dir) {
         return;
     }
 
     while ((dp = readdir(dir)) != NULL) {
-        // printf("load_themes: %s\n", dp->d_name);
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0) {
             if (strncasecmp(dp->d_name, "CUST_", 5) == 0) {
                 int theme_num = dp->d_name[5] - '0';

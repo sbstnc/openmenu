@@ -23,8 +23,8 @@
 #include "backend/gd_list.h"
 
 #ifdef _arch_dreamcast
-#include "gdrom/gdrom_fs.h"
-#define PATH_PREFIX DISC_PREFIX
+#include <kos/fs.h>
+#define PATH_PREFIX "/cd/"
 #else
 #define PATH_PREFIX ""
 #endif
@@ -108,12 +108,7 @@ static gd_item* list_multidisc[MULTIDISC_MAX_GAMES_PER_SET] = {NULL};
 #ifndef STANDALONE_BINARY
 static inline long int
 filelength(file_t f) {
-    long int end;
-    fs_seek(f, 0, SEEK_END);
-    end = fs_tell(f);
-    fs_seek(f, 0, SEEK_SET);
-
-    return end;
+    return fs_total(f);
 }
 #else
 static inline long int

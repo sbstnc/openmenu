@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 
-#include "gdrom/gdrom_fs.h"
 #include "backend/db_list.h"
 #include "backend/dat_format.h"
 #include "texture/serial_sanitize.h"

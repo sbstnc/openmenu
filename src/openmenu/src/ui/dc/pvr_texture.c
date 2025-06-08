@@ -6,13 +6,12 @@
  * -----
  * Copyright (c) 2019 Hayden Kowalchuk
  */
-#include "pvr_texture.h"
 
+#include <kos/fs.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <gdrom/gdrom_fs.h>
+#include "pvr_texture.h"
 
 #define PVR_HDR_SIZE 0x20
 
@@ -139,9 +138,7 @@ static void
 pvr_read_to_internal(const char* filename) {
     uint32_t texSize;
     file_t tex_fd;
-    // memcpy(filename_safe, DISC_PREFIX, strlen(DISC_PREFIX) + 1);
-    // strcat(filename_safe, filename);
-    snprintf(filename_safe, 127, "%s%s", DISC_PREFIX, filename);
+    snprintf(filename_safe, 127, "/cd/%s", filename);
 
     /* replace all - with _ */
     char* iter = filename_safe;

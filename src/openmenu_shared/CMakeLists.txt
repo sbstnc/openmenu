@@ -21,7 +21,6 @@ if (BUILD_DREAMCAST)
     )
     list(APPEND OPENMENUSHARED_DREAMCAST_HEADERS
             include/backend/db_list.h
-            include/gdrom/gdrom_fs.h
             include/texture/serial_sanitize.h
     )
 endif ()
