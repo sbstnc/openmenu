@@ -9,11 +9,11 @@
  * http://www.opensource.org/licenses/BSD-3-Clause
  */
 
+#include <ctype.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#include <ctype.h>
 
 #include <ini.h>
 
@@ -184,6 +184,7 @@ list_print_slots(void) {
         gd_item* item = &gd_slots_BASE[i];
 #define CFG(s, n, default) printf("%s = %s\n", #n, item->n);
 #include "backend/gd_item.def"
+
         printf("\n");
     }
 }
@@ -195,6 +196,7 @@ list_print_temp(void) {
         gd_item* item = list_temp[i];
 #define CFG(s, n, default) printf("%s = %s\n", #n, item->n);
 #include "backend/gd_item.def"
+
         printf("\n");
     }
 }
@@ -207,6 +209,7 @@ list_print(const gd_item** list) {
         const gd_item* item = list[i];
 #define CFG(s, n, default) printf("%s = %s\n", #n, item->n);
 #include "backend/gd_item.def"
+
         printf("\n");
     }
     printf("\n");

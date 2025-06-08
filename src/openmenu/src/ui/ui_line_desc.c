@@ -201,13 +201,13 @@ draw_game_meta(void) {
     {
         if (disc_set > 1) {
             if (!hide_multidisc) {
-                char disc_str[8];
-                snprintf(disc_str, 8, "Disc %d", disc_num);
+                char disc_str[12];
+                snprintf(disc_str, 11, "Disc %d", disc_num);
                 font_bmf_draw_sub(316 + 22 + 4, 36, current_theme_colors->text_color, disc_str);
             } else {
                 /* Draw multiple discs and how many */
-                char disc_str[8];
-                snprintf(disc_str, 8, "%d Discs", disc_set);
+                char disc_str[12];
+                snprintf(disc_str, 11, "%d Discs", disc_set);
                 font_bmf_draw_sub(316 + 22 + 4, 36, current_theme_colors->text_color, disc_str);
             }
         }

@@ -256,12 +256,6 @@ static int
 BMF_parse_kerning(file_t fd, size_t block_size, bm_font* font) {
     DBG_PRINT("BMF found kerning block!\n");
 
-    /* Do nothing! */
-    /*
-  fseek(fd, block_size, SEEK_CUR);
-  font->kerns = NULL;
-  */
-
     /* Parse and save */
     int num_pairs = block_size / sizeof(bm_kern_pair);
 

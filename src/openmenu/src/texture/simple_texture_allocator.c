@@ -13,8 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "texture/txr_manager.h"
 #include "texture/simple_texture_allocator.h"
+#include "texture/txr_manager.h"
 
 static struct Simple_Texture textures[32];
 static void* tex_buffer = NULL;
@@ -34,8 +34,6 @@ texman_inited(void) {
 
 void
 texman_reset(void* buf, uint32_t size) {
-    // txr_empty_small_pool();
-    // txr_empty_large_pool();
     memset(textures, 0, sizeof(textures));
     tex_number = 0;
     tex_buffer = tex_buffer_start = buf;
@@ -43,7 +41,6 @@ texman_reset(void* buf, uint32_t size) {
 #ifdef DEBUG
     char msg[64];
     sprintf(msg, "TEXMAN: reset @ %p size %d bytes\n", buf, size);
-    // sceIoWrite(1, msg, strlen(msg));
     printf(msg);
 #endif
 }
@@ -56,7 +53,6 @@ texman_clear(void) {
 #ifdef DEBUG
     char msg[64];
     sprintf(msg, "TEXMAN: clear %p size %d bytes!\n", tex_buffer, TEXMAN_BUFFER_SIZE);
-    // sceIoWrite(1, msg, strlen(msg));
     printf(msg);
 #endif
 }
@@ -114,7 +110,4 @@ texman_upload(uint32_t width, uint32_t height, int bpp, const void* buffer) {
     current->width = width;
     current->height = height;
     memcpy(current->location, buffer, getMemorySize(width, height, bpp));
-#ifdef DEBUG
-    // printf("TEX_MAN upload plain [%d]\n", tex_number);
-#endif
 }

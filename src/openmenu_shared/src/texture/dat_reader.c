@@ -162,9 +162,8 @@ DAT_read_file_by_ID(const dat_file* bin, const char* ID, void* buf) {
         fread(buf, bin->chunk_size, 1, bin->handle);
 #endif
         return 1;
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 int
@@ -179,7 +178,6 @@ DAT_read_file_by_num(const dat_file* bin, uint32_t chunk_num, void* buf) {
         fread(buf, bin->chunk_size, 1, bin->handle);
 #endif
         return 1;
-    } else {
-        return 0;
     }
+    return 0;
 }
