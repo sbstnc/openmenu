@@ -14,7 +14,6 @@
 
 #include <uthash.h>
 
-#include <gdrom/gdrom_fs.h>
 #include <backend/dat_format.h>
 
 /* Define configure constants */
@@ -54,8 +53,7 @@ DAT_load_parse(dat_file* bin, const char* path) {
     const char* filename_safe = path;
 #else
     char filename_safe[128];
-    memcpy(filename_safe, DISC_PREFIX, strlen(DISC_PREFIX) + 1);
-    strcat(filename_safe, path);
+    snprintf(filename_safe, 127, "/cd/%s", path);
 
     bin_fd = fs_open(filename_safe, O_RDONLY);
 #endif

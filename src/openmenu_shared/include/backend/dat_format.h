@@ -11,8 +11,11 @@
 #pragma once
 
 #include <stdint.h>
-
 #include <uthash.h>
+
+#ifdef _arch_dreamcast
+#include <kos/fs.h>
+#endif
 
 typedef struct bin_item {
     char ID[12];
