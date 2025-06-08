@@ -411,8 +411,10 @@ menu_cb(void) {
         return;
     }
 
-    if (!strncmp(list_current[current_selected_item]->disc, "PS1", 3)
-        || !strncmp(list_current[current_selected_item]->disc, "DIR", 3)) {
+    if (!strncmp(list_current[current_selected_item]->disc, "DIR", 3)) {
+        return;
+    } else if (!strncmp(list_current[current_selected_item]->disc, "PS1", 3)) {
+        bloom_launch(list_current[current_selected_item]);
         return;
     }
 
