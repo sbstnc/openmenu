@@ -38,3 +38,28 @@ jobs:
           git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "Release v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
           git push origin v${{ steps.release.outputs.major }}
           git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}
+
+  call-ci:
+    needs: [ release-please ]
+    if: ${{ needs.release-please.outputs.release_created }}
+    uses: ./.github/workflows/ci.yaml
+
+  attach-artifacts:
+    needs: [ release-please, call-ci ]
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.call-ci.outputs.openmenu-artifact-id }},${{ needs.call-ci.outputs.tools-artifact-id }}
+          path: ./artifacts
+
+      - name: Upload release artifacts
+        run: |
+          zip -r -j ./artifacts/openmenu.zip ./artifacts/openmenu/
+          zip -r -j ./artifacts/tools-linux-x64.zip ./artifacts/tools/
+          gh release upload ${{ needs.release-please.outputs.tag_name }} \
+            ./artifacts/openmenu.zip \
+            ./artifacts/tools-linux-x64.zip \
+            --clobber

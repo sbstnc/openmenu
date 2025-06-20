@@ -6,6 +6,8 @@ on:
       - .gitignore
       - docker/**
       - "**/*.md"
+    branches-ignore:
+      - main
   pull_request:
     paths-ignore:
       - .gitignore
