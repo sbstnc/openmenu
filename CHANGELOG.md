@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/sbstnc/openmenu/compare/v1.1.0...v1.2.0) (2025-06-20)
+
+
+### Features
+
+* Add support for launching PS1 applications via Bloom ([b141378](https://github.com/sbstnc/openmenu/commit/b141378f1988795825139a247d372d6dffba52a4))
+
 ## [1.1.0](https://github.com/sbstnc/openmenu/compare/v1.0.0...v1.1.0) (2025-06-20)
 
 
