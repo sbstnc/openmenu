@@ -1,0 +1,12 @@
+{
+  "release-type": "simple",
+  "include-component-in-tag": false,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "plugins": ["sentence-case"],
+  "packages": {
+    ".": {
+      "package-name": "openmenu"
+    }
+  }
+}
