@@ -12,6 +12,14 @@ on:
       - docker/**
       - "**/*.md"
   workflow_dispatch:
+  workflow_call:
+    outputs:
+      openmenu-artifact-id:
+        description: ID of the uploaded openmenu artifact
+        value: ${{ jobs.openmenu.outputs.openmenu-artifact-id }}
+      tools-artifact-id:
+        description: ID of the uploaded tools artifact
+        value: ${{ jobs.openmenu.outputs.tools-artifact-id }}
 
 permissions:
   contents: read
@@ -22,6 +30,9 @@ concurrency:
 
 jobs:
   openmenu:
+    outputs:
+      openmenu-artifact-id: ${{ steps.openmenu-artifact.outputs.artifact-id }}
+      tools-artifact-id: ${{ steps.tools-artifact.outputs.artifact-id }}
     runs-on: ubuntu-latest
     container:
       image: sbstnc/openmenu-dev:0.2.2
@@ -47,6 +58,7 @@ jobs:
 
       - name: Upload openmenu artifacts
         uses: actions/upload-artifact@v4
+        id: openmenu-artifact
         with:
           name: openmenu
           path: |
@@ -55,6 +67,7 @@ jobs:
 
       - name: Upload tool artifacts
         uses: actions/upload-artifact@v4
+        id: tools-artifact
         with:
           name: tools
           path: |
