@@ -63,3 +63,5 @@ jobs:
             ./artifacts/openmenu.zip \
             ./artifacts/tools-linux-x64.zip \
             --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
