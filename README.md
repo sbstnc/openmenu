@@ -182,6 +182,34 @@ modify the build process):
     make
     ```
 
+## Compiling in Dev Container without Dev Container
+
+1.  Follow the instructions in [**Building the Dev Container Image Locally**](#building-the-dev-container-image-locally) up to
+    step 4
+2.  Verify that the Docker image exists
+    ```bash
+    docker images
+    ```
+3.  Build the Docker container
+    ```bash
+    docker run --name openmenu-dev -it -d -v ./..:/src:rw openmenu-dev
+    ```
+4.  Open bash in container
+    ```bash
+    docker exec -it openmenu-dev bash
+    ```
+5.  Change to source directory in the container
+    ```bash
+    cd /src
+    ```
+6.  Build the application
+    ```bash
+    # Configure using the 'dc-release' preset
+    cmake --preset dc-release
+    # Build using the 'dc-release' preset configuration
+    cmake --build --preset dc-release
+    ```
+
 ## Usage
 
 The primary output is `1ST_READ.BIN`. This file is intended to replace the
