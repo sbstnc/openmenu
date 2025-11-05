@@ -182,7 +182,7 @@ modify the build process):
     make
     ```
 
-## Compiling in Dev Container without Dev Container
+## Compiling in Docker Container without VSCode Dev Container
 
 1.  Follow the instructions in [**Building the Dev Container Image Locally**](#building-the-dev-container-image-locally) up to
     step 4
