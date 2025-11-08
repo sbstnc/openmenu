@@ -129,7 +129,8 @@ check_vm2_present(maple_device_t* dev) {
 
     maple_alldevinfo_t* info = (maple_alldevinfo_t*)&recv_buff[4];
 
-    if (!strncasecmp(info->extended, "VM2 by Dreamware", 16) || !strncasecmp(info->extended, "USB RP2040 EMU  ", 16)) {
+    if (!strncasecmp(info->extended, "VM2 by Dreamware", 16) || !strncasecmp(info->extended, "USB RP2040 EMU  ", 16)
+        || !strncasecmp(info->extended, "8BITMODS VMUPro ", 16)) {
         return 1;
     }
 
