@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/sbstnc/openmenu/compare/v1.2.0...v1.3.0) (2025-11-08)
+
+
+### Features
+
+* Add support for 8BitMods VMU Pro ([93a5d84](https://github.com/sbstnc/openmenu/commit/93a5d841614e548996057bc8ad79b085f7bd6e52))
+
 ## [1.2.0](https://github.com/sbstnc/openmenu/compare/v1.1.0...v1.2.0) (2025-06-20)
 
 
